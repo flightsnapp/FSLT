@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --primary-color: #00FFFF;
+  --secondary-color: #00CED1;
+  --accent-color: #00FF7F;
+  --background-color: #1A2A44;
+  --text-color: #3DB2C2;
+  --primary-blue: #007bff;
+  --dark-blue: #0056b3;
+  --accent-green: #28A745;
+  --text-white: #FFFFFF;
+  --hover-blue: #0056b3;
+  --header-height: 60px;
+  --footer-height: 40px;
+  --font-heading: 'Audiowide', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 60px 0 40px 0; /* Account for sticky header/footer */
+  background: linear-gradient(135deg, #1A2A44, #0f172a, #00CED1);
+  color: var(--text-color);
+  min-height: 100vh;
+  font-family: var(--font-body);
+  animation: backgroundScroll 20s linear infinite;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-color);
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+strong, b {
+  font-weight: normal;
+}
+
+/* Background Image Container for Scrolling Matrix */
+.background-image-container {
+  position: fixed;
+  top: var(--header-height);
+  bottom: var(--footer-height);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background-repeat: repeat-y;
+  background-size: auto;
+  background-position: 50% 0;
+  animation: scrollBackground 20s linear infinite;
+}
+.page-container {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: rgba(26, 42, 68, 0.95);
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
+}
+
+.page-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--primary-color);
+  margin: 1.5rem 0;
+}
+
+.policy-section {
+  margin-bottom: 2rem;
+}
+
+.policy-section h2 {
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  font-size: 1.5rem;
+}
+
+.policy-section h2 i {
+  color: var(--primary-color);
+  margin-right: 0.5rem;
+}
+
+.policy-section p, .policy-section ul {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for Quiz */
+.slider-thumb {
+  animation: none;
+}
+
+.slider-thumb.spinning {
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Glow keyframe */
+@keyframes glow {
+  0% { box-shadow: 0 0 5px var(--primary-color); }
+  100% { box-shadow: 0 0 15px var(--primary-color); }
+}
+
+/* Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Background Scroll */
+@keyframes scrollBackground {
+  0% { background-position: 50% 0; }
+  100% { background-position: 50% 1024px; }
+}
+
+/* Sticky Header */
+.sticky-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--background-color);
+  z-index: 1000;
+  padding: 15px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-content nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-links a {
+  color: var(--text-white);
+  text-decoration: none;
+  text-transform: none;
+}
+
+.nav-links a:hover {
+  color: var(--accent-color);
+}
+
+.logo-header {
+  max-width: 400px;
+  height: auto;
+  animation: glow 2s infinite alternate;
+}
+
+.logo-header h1 {
+  color: var(--text-white);
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* Social Icons */
+.social-icons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-icons a {
+  text-transform: none;
+  text-shadow: none;
+  font-size: 1.5rem;
+  color: var(--text-white);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: var(--accent-color);
+  transform: translateY(-5px);
+}
+
+/* Sticky Footer */
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  text-align: center;
+  padding: 1rem 0;
+  z-index: 1000;
+}
+
+.sticky-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.sticky-footer a:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
