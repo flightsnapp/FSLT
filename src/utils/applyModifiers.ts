@@ -1,18 +1,18 @@
-import { Scores, strength } from './scoreEngine';
-import { TRAITS } from '../src/utils/personaCalculator';
+import { Scores, strength, Trait } from './scoreEngine';
+import { TRAITS } from './personaCalculator';
 
-const matrix = require('./modifier_matrix.json');
+import matrix from './modifier_matrix.json';
 
 export function implicitFromTraits(scores: Scores): [string, number][] {
   const implicitTags: [string, number][] = [];
 
   for (const trait of TRAITS) {
-    const score = scores[trait], hi = matrix.thresholds.hi, lo = matrix.thresholds.lo;
+    const score = scores[trait as Trait], hi = matrix.thresholds.hi, lo = matrix.thresholds.lo;
     let tags: string[] = [];
     if (score >= hi) {
-      tags = matrix.implicit[trait].hi;
+      tags = matrix.implicit[trait as Trait].hi;
     } else if (score <= lo) {
-      tags = matrix.implicit[trait].lo;
+      tags = matrix.implicit[trait as Trait].lo;
     }
     const weight = strength(score);
     tags.forEach(tag => implicitTags.push([tag, weight]));

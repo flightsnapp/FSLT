@@ -1,7 +1,7 @@
 // Big 5 traits constants
 export const TRAITS = ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"] as const;
 
-import { Trait, Scores, center, strength, personaFit } from '../../utils/scoreEngine.ts';
+import { Trait, Scores, center, strength, personaFit } from './scoreEngine';
 
 const personaWeights: Record<string, Record<Trait, number>> = Object.fromEntries(PERSONAS.map(p => [p.name, p.weights]));
 
@@ -439,7 +439,7 @@ const PERSONAS = [
   }
 ];
 
-export const getPersona = (traitScores, followUpTags = []) => {
+export const getPersona = (traitScores: Scores, followUpTags = []) => {
   if (!traitScores || Object.keys(traitScores).length !== 5) {
     throw new Error('Must provide trait scores for all 5 traits');
   }

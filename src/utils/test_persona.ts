@@ -1,6 +1,7 @@
-import { normalize, personaFit, TRAITS, Scores } from '../../utils/scoreEngine.ts';
-import { implicitFromTraits, mergeModifiers } from '../../utils/applyModifiers.ts';
-import { squadScore, Vec } from '../../utils/squad_scoring.ts';
+import { normalize, personaFit, Scores } from '../utils/scoreEngine';
+import { implicitFromTraits, mergeModifiers } from '../utils/applyModifiers';
+import { squadScore, Vec } from '../utils/squad_scoring';
+import { TRAITS } from './personaCalculator';
 
 // Mock personaWeights
 const personaWeights: Record<string, Record<string, number>> = {
