@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { calculateTraitScores, getPersona, encryptQuizResult, decryptQuizResult, getSecureGeoLocation } from './utils/personaCalculator';
-
+import { normalize, calculateTraitScores, personaFit } from '../utils/scoreEngine.ts';
+import { encryptQuizResult, getSecureGeoLocation, personaWeights } from './utils/personaCalculator.ts';
 const Quiz = () => {
   const navigate = useNavigate();
   const [stage, setStage] = useState('welcome'); // welcome, core, follow-up, reveal, results
@@ -354,7 +354,7 @@ const Quiz = () => {
       localStorage.setItem('quizResult', encrypted);
       navigate('/results');
     } catch (error) {
-      console.error('Failed to save results:', error);
+      alert(`Encryption failed (${error.message}), using insecure storage for demo.`);
       // Fallback to insecure for MVP
       localStorage.setItem('quizResult', JSON.stringify({ persona: finalPersona, scores, date: new Date() }));
       navigate('/results');
@@ -740,7 +740,6 @@ const Quiz = () => {
             ))}
           </div>
         </motion.div>
-
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

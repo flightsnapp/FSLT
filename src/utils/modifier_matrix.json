@@ -1,0 +1,35 @@
+{
+  "thresholds": {
+    "hi": 70,
+    "lo": 30
+  },
+  "implicit": {
+    "Openness": {
+      "hi": ["Adventure", "Offbeat", "Cultural"],
+      "lo": ["Comfort", "Familiar", "Luxury"]
+    },
+    "Conscientiousness": {
+      "hi": ["Planner", "Structured"],
+      "lo": ["Spontaneous", "Last-Minute", "YOLO"]
+    },
+    "Extraversion": {
+      "hi": ["Group", "Nightlife", "Festival"],
+      "lo": ["Solo", "Independent", "Introspective"]
+    },
+    "Agreeableness": {
+      "hi": ["Connector", "Community", "Friendly"],
+      "lo": ["Maverick", "Independent"]
+    },
+    "Neuroticism": {
+      "hi": ["Security-Seeker", "Guided", "Wellness"],
+      "lo": ["Fearless", "Risk-Taker"]
+    }
+  },
+  "caps": {
+    "implicitTop": 3,
+    "finalTop": 5
+  },
+  "abVariants": {
+    "thresholdsHi": [65, 70, 75],
+    "thresholdsLo": [25, 30, 35]
+  }

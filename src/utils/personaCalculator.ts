@@ -1,38 +1,63 @@
 // Big 5 traits constants
-const TRAITS = {
-  OPENNESS: 'Openness',
-  CONSCIENTIOUSNESS: 'Conscientiousness',
-  EXTRAVERSION: 'Extraversion',
-  AGREEABLENESS: 'Agreeableness',
-  NEUROTICISM: 'Neuroticism'
-};
+export const TRAITS = ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"] as const;
+
+import { Trait, Scores, center, strength, personaFit } from '../../utils/scoreEngine.ts';
+
+const personaWeights: Record<string, Record<Trait, number>> = Object.fromEntries(PERSONAS.map(p => [p.name, p.weights]));
+
+export { personaFit };
 
 // Assumes 10 questions: 2 per trait (Openness 0-1, Conscientiousness 2-3, etc.)
-export const calculateTraitScores = (questionScores) => {
+export const calculateTraitScores = (questionScores: number[]): { raw: Scores; centered: Scores; strength: Scores } => {
   if (!questionScores || questionScores.length !== 10) {
     throw new Error('Must provide exactly 10 question scores');
   }
 
-  const traitAverages = [
+  // Validate each score
+  questionScores.forEach(score => {
+    if (score < 1 || score > 5) {
+      throw new Error(`Each question score must be between 1 and 5, got ${score}`);
+    }
+  });
+
+  const rawAverages = [
     // Openness (questions 0-1)
-    (questionScores[0] + questionScores[1]) / 2 * 2, // scale 1-5 to 1-10
+    (questionScores[0] + questionScores[1]) / 2,
     // Conscientiousness (2-3)
-    (questionScores[2] + questionScores[3]) / 2 * 2,
+    (questionScores[2] + questionScores[3]) / 2,
     // Extraversion (4-5)
-    (questionScores[4] + questionScores[5]) / 2 * 2,
+    (questionScores[4] + questionScores[5]) / 2,
     // Agreeableness (6-7)
-    (questionScores[6] + questionScores[7]) / 2 * 2,
+    (questionScores[6] + questionScores[7]) / 2,
     // Neuroticism (8-9)
-    (questionScores[8] + questionScores[9]) / 2 * 2
+    (questionScores[8] + questionScores[9]) / 2
   ];
 
-  return {
-    [TRAITS.OPENNESS]: traitAverages[0],
-    [TRAITS.CONSCIENTIOUSNESS]: traitAverages[1],
-    [TRAITS.EXTRAVERSION]: traitAverages[2],
-    [TRAITS.AGREEABLENESS]: traitAverages[3],
-    [TRAITS.NEUROTICISM]: traitAverages[4]
+  const raw: Scores = {
+    [TRAITS[0] as Trait]: ((rawAverages[0] - 1) / 4) * 100,
+    [TRAITS[1] as Trait]: ((rawAverages[1] - 1) / 4) * 100,
+    [TRAITS[2] as Trait]: ((rawAverages[2] - 1) / 4) * 100,
+    [TRAITS[3] as Trait]: ((rawAverages[3] - 1) / 4) * 100,
+    [TRAITS[4] as Trait]: ((rawAverages[4] - 1) / 4) * 100
   };
+
+  const cent: Scores = {
+    [TRAITS[0] as Trait]: center(raw[TRAITS[0] as Trait]),
+    [TRAITS[1] as Trait]: center(raw[TRAITS[1] as Trait]),
+    [TRAITS[2] as Trait]: center(raw[TRAITS[2] as Trait]),
+    [TRAITS[3] as Trait]: center(raw[TRAITS[3] as Trait]),
+    [TRAITS[4] as Trait]: center(raw[TRAITS[4] as Trait])
+  };
+
+  const str: Scores = {
+    [TRAITS[0] as Trait]: strength(raw[TRAITS[0] as Trait]),
+    [TRAITS[1] as Trait]: strength(raw[TRAITS[1] as Trait]),
+    [TRAITS[2] as Trait]: strength(raw[TRAITS[2] as Trait]),
+    [TRAITS[3] as Trait]: strength(raw[TRAITS[3] as Trait]),
+    [TRAITS[4] as Trait]: strength(raw[TRAITS[4] as Trait])
+  };
+
+  return { raw, centered: cent, strength: str };
 };
 
 // 25 Travel Personas with weights (0-10 for each trait), description, tags, example_trips
@@ -419,31 +444,11 @@ export const getPersona = (traitScores, followUpTags = []) => {
     throw new Error('Must provide trait scores for all 5 traits');
   }
 
-  // Normalize traitScores to match weight ranges (assume 1-10)
-  const normalizedScores = Object.values(traitScores);
+  // Assume traitScores is raw 0-100
+  const centered = Object.fromEntries(Object.entries(traitScores).map(([k, v]) => [k, center(v)]));
 
-  let bestMatch = null;
-  let highestScore = -1;
-
-  // Calculate dot product for each persona
-  PERSONAS.forEach(persona => {
-    const weightArray = [
-      persona.weights[TRAITS.OPENNESS],
-      persona.weights[TRAITS.CONSCIENTIOUSNESS],
-      persona.weights[TRAITS.EXTRAVERSION],
-      persona.weights[TRAITS.AGREEABLENESS],
-      persona.weights[TRAITS.NEUROTICISM]
-    ];
-
-    const dotProduct = weightArray.reduce((sum, weight, i) => sum + (weight * normalizedScores[i]), 0);
-
-    if (dotProduct > highestScore) {
-      highestScore = dotProduct;
-      bestMatch = persona;
-    }
-  });
-
-  return bestMatch;
+  const fits = personaFit(centered, personaWeights);
+  return PERSONAS.find(p => p.name === fits[0].persona);
 };
 
 /**

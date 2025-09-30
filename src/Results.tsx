@@ -10,11 +10,37 @@ const Results = () => {
   useEffect(() => {
     const stored = localStorage.getItem('quizResult');
     if (stored) {
-      decryptQuizResult(stored).then(setResult).catch(() => navigate('/'));
+      decryptQuizResult(stored).then(setResult).catch(async () => {
+        // Try old format for backward compatibility
+        try {
+          const decrypted = await decryptQuizResultOld(stored);
+          setResult(decrypted);
+        } catch (oldError) {
+          console.warn('Failed to decrypt old or new format:', oldError);
+          navigate('/');
+        }
+      });
     } else {
       navigate('/');
     }
   }, [navigate]);
+
+  // Fallback decrypt for old format (no salt)
+  const decryptQuizResultOld = async (encryptedData) => {
+    const bytes = new Uint8Array(atob(encryptedData).split('').map(c => c.charCodeAt(0)));
+    const keyStr = process.env.REACT_APP_CRYPTO_KEY || 'flight-snapp-quiz-result';
+    const key = await crypto.subtle.deriveKey(
+      new TextEncoder().encode(keyStr),
+      { name: 'PBKDF2', salt: new Uint8Array(16), iterations: 100000, hash: 'SHA-256' },
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['decrypt']
+    );
+    const iv = bytes.slice(0, 12);
+    const ct = bytes.slice(12);
+    const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+    return JSON.parse(new TextDecoder().decode(decrypted));
+  };
 
   if (!result) return <div>Loading...</div>;
 
