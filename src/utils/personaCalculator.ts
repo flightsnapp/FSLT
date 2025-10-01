@@ -1,7 +1,14 @@
-import { Trait, Scores, center, strength, personaFit } from './scoreEngine';
+// Top of file
+import { personaFit } from './scoreEngine.ts'; // If used for scoring
 
 // Big 5 traits constants
-const TRAITS = ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"] as const;
+const TRAITS = {
+  OPENNESS: 'Openness',
+  CONSCIENTIOUSNESS: 'Conscientiousness',
+  EXTRAVERSION: 'Extraversion',
+  AGREEABLENESS: 'Agreeableness',
+  NEUROTICISM: 'Neuroticism'
+};
 
 const personaWeights: Record<string, Record<Trait, number>> = Object.fromEntries(PERSONAS.map(p => [p.name, p.weights]));
 

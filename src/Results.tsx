@@ -1,37 +1,61 @@
+```typescript
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { decryptQuizResult } from './utils/personaCalculator';
+import { decryptQuizResult } from './utils/personaCalculator.ts';
 
-const Results = () => {
-  const [result, setResult] = useState(null);
+// Define types
+interface Persona {
+  name: string;
+  description: string;
+  tags: string[];
+  example_trips: string[];
+  weights: {
+    Openness: number;
+    Conscientiousness: number;
+    Extraversion: number;
+    Agreeableness: number;
+    Neuroticism: number;
+  };
+}
+
+interface QuizResult {
+  persona: Persona;
+  scores: number[];
+  date: Date;
+}
+
+const Results: React.FC = () => {
+  const [result, setResult] = useState<QuizResult | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const stored = localStorage.getItem('quizResult');
     if (stored) {
-      decryptQuizResult(stored).then(setResult).catch(async () => {
-        // Try old format for backward compatibility
-        try {
-          const decrypted = await decryptQuizResultOld(stored);
-          setResult(decrypted);
-        } catch (oldError) {
-          console.warn('Failed to decrypt old or new format:', oldError);
-          navigate('/');
-        }
-      });
+      decryptQuizResult(stored)
+        .then(setResult)
+        .catch(async () => {
+          // Try old format for backward compatibility
+          try {
+            const decrypted = await decryptQuizResultOld(stored);
+            setResult(decrypted);
+          } catch (oldError) {
+            console.warn('Failed to decrypt old or new format:', oldError);
+            navigate('/');
+          }
+        });
     } else {
       navigate('/');
     }
   }, [navigate]);
 
   // Fallback decrypt for old format (no salt)
-  const decryptQuizResultOld = async (encryptedData) => {
+  const decryptQuizResultOld = async (encryptedData: string): Promise<QuizResult> => {
     const bytes = new Uint8Array(atob(encryptedData).split('').map(c => c.charCodeAt(0)));
     const keyStr = process.env.REACT_APP_CRYPTO_KEY || 'flight-snapp-quiz-result';
     const key = await crypto.subtle.deriveKey(
-      new TextEncoder().encode(keyStr),
       { name: 'PBKDF2', salt: new Uint8Array(16), iterations: 100000, hash: 'SHA-256' },
+      new TextEncoder().encode(keyStr),
       { name: 'AES-GCM', length: 256 },
       false,
       ['decrypt']
@@ -53,7 +77,7 @@ const Results = () => {
   };
 
   const shareOnFacebook = () => {
-    const url = 'https://www.facebook.com/sharer/sharer.php?u=https://flightsnapp.com&quote=My%20Travel%20Persona:%20' + encodeURIComponent(persona.name);
+    const url = `https://www.facebook.com/sharer/sharer.php?u=https://flightsnapp.com&quote=My%20Travel%20Persona:%20${encodeURIComponent(persona.name)}`;
     window.open(url, '_blank');
   };
 
@@ -89,7 +113,6 @@ const Results = () => {
             ))}
           </div>
         </div>
-
         <div className="mb-8">
           <h3 className="text-xl font-semibold mb-4">AI Curated Travel Recommendations</h3>
           <div className="grid md:grid-cols-3 gap-4">
@@ -101,21 +124,32 @@ const Results = () => {
             ))}
           </div>
         </div>
-
         <div className="mb-8">
           <h3 className="text-xl font-semibold mb-4">Share Your Persona</h3>
           <div className="flex justify-center space-x-4">
-            <button onClick={shareOnTwitter} className="px-4 py-2 bg-black hover:bg-gray-800 text-white rounded flex items-center">
+            <button
+              onClick={shareOnTwitter}
+              className="px-4 py-2 bg-black hover:bg-gray-800 text-white rounded flex items-center"
+            >
               <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
               Share on X
             </button>
-            <button onClick={shareOnFacebook} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded">Facebook</button>
-            <button onClick={shareOnInstagram} className="px-4 py-2 bg-pink-500 hover:bg-pink-600 rounded">Instagram</button>
+            <button
+              onClick={shareOnFacebook}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
+            >
+              Facebook
+            </button>
+            <button
+              onClick={shareOnInstagram}
+              className="px-4 py-2 bg-pink-500 hover:bg-pink-600 rounded"
+            >
+              Instagram
+            </button>
           </div>
         </div>
-
         <div className="mb-8">
           <h3 className="text-xl font-semibold mb-4">Unlock Flightsnapp Beta</h3>
           <p className="mb-4">Get early access to personalized travel planning powered by AI!</p>
@@ -128,7 +162,6 @@ const Results = () => {
             Subscribe Now - $9.99/month
           </motion.button>
         </div>
-
         <button
           onClick={() => navigate('/')}
           className="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded"
@@ -141,3 +174,4 @@ const Results = () => {
 };
 
 export default Results;
+```

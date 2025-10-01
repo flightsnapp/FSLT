@@ -1,17 +1,17 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Quiz from './Quiz';
-import Results from './Results';
-import PrivacyPolicy from './PrivacyPolicy';
-import TermsOfService from './TermsOfService';
-import SnappStarsPolicy from './SnappStarsPolicy';
-import Vision from './Vision';
-import Team from './Team';
-import Personas from './Personas';
-import Header from './Header';
-import Footer from './Footer';
+import Quiz from './Quiz.tsx';
+import Results from './Results.tsx';
+import PrivacyPolicy from './PrivacyPolicy.tsx';
+import TermsOfService from './TermsOfService.tsx';
+import SnappStarsPolicy from './SnappStarsPolicy.tsx';
+import Vision from './Vision.tsx';
+import Team from './Team.tsx';
+import Personas from './Personas.tsx';
+import Header from './Header.tsx';
+import Footer from './Footer.tsx';
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <Header />
@@ -30,6 +30,6 @@ function App() {
       <Footer />
     </>
   );
-}
+};
 
 export default App;
