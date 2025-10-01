@@ -1,4 +1,3 @@
-```typescript
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -48,4 +47,3 @@ const Vision: React.FC = () => {
 };
 
 export default Vision;
-```

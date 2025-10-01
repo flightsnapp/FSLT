@@ -1,4 +1,3 @@
-```typescript
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PERSONAS } from './utils/personaCalculator.ts';
@@ -95,4 +94,3 @@ const Personas: React.FC = () => {
 };
 
 export default Personas;
-```

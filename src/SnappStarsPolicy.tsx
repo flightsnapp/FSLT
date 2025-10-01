@@ -1,4 +1,3 @@
-```typescript
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -178,4 +177,3 @@ const SnappStarsPolicy: React.FC = () => {
 };
 
 export default SnappStarsPolicy;
-```

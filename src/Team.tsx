@@ -1,4 +1,3 @@
-```typescript
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,4 +45,3 @@ const Team: React.FC = () => {
 };
 
 export default Team;
-```

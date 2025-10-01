@@ -1,4 +1,3 @@
-```typescript
 import React from 'react';
 
 const PrivacyPolicy: React.FC = () => (
@@ -92,4 +91,3 @@ const PrivacyPolicy: React.FC = () => (
 );
 
 export default PrivacyPolicy;
-```

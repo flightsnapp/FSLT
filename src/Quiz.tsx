@@ -1,4 +1,3 @@
-```typescript
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -830,4 +829,3 @@ const Quiz: React.FC = () => {
 };
 
 export default Quiz;
-```
