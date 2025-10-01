@@ -1,8 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { normalize, calculateTraitScores, personaFit } from './utils/scoreEngine';
-import { getPersona, encryptQuizResult, getSecureGeoLocation, personaWeights } from './utils/personaCalculator';
+import { normalize, personaFit } from './utils/scoreEngine';
+import { getPersona, calculateTraitScores, encryptQuizResult, getSecureGeoLocation, personaWeights } from './utils/personaCalculator';
+
+interface Scores {
+  Openness: number;
+  Conscientiousness: number;
+  Extraversion: number;
+  Agreeableness: number;
+  Neuroticism: number;
+}
+
 const Quiz = () => {
   const navigate = useNavigate();
   const [stage, setStage] = useState('welcome'); // welcome, core, follow-up, reveal, results

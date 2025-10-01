@@ -1,10 +1,11 @@
-// Big 5 traits constants
-export const TRAITS = ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"] as const;
-
 import { Trait, Scores, center, strength, personaFit } from './scoreEngine';
+
+// Big 5 traits constants
+const TRAITS = ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"] as const;
 
 const personaWeights: Record<string, Record<Trait, number>> = Object.fromEntries(PERSONAS.map(p => [p.name, p.weights]));
 
+export { personaWeights };
 export { personaFit };
 
 // Assumes 10 questions: 2 per trait (Openness 0-1, Conscientiousness 2-3, etc.)
@@ -34,27 +35,27 @@ export const calculateTraitScores = (questionScores: number[]): { raw: Scores; c
   ];
 
   const raw: Scores = {
-    [TRAITS[0] as Trait]: ((rawAverages[0] - 1) / 4) * 100,
-    [TRAITS[1] as Trait]: ((rawAverages[1] - 1) / 4) * 100,
-    [TRAITS[2] as Trait]: ((rawAverages[2] - 1) / 4) * 100,
-    [TRAITS[3] as Trait]: ((rawAverages[3] - 1) / 4) * 100,
-    [TRAITS[4] as Trait]: ((rawAverages[4] - 1) / 4) * 100
+    Openness: ((rawAverages[0] - 1) / 4) * 100,
+    Conscientiousness: ((rawAverages[1] - 1) / 4) * 100,
+    Extraversion: ((rawAverages[2] - 1) / 4) * 100,
+    Agreeableness: ((rawAverages[3] - 1) / 4) * 100,
+    Neuroticism: ((rawAverages[4] - 1) / 4) * 100
   };
 
   const cent: Scores = {
-    [TRAITS[0] as Trait]: center(raw[TRAITS[0] as Trait]),
-    [TRAITS[1] as Trait]: center(raw[TRAITS[1] as Trait]),
-    [TRAITS[2] as Trait]: center(raw[TRAITS[2] as Trait]),
-    [TRAITS[3] as Trait]: center(raw[TRAITS[3] as Trait]),
-    [TRAITS[4] as Trait]: center(raw[TRAITS[4] as Trait])
+    Openness: center(raw.Openness),
+    Conscientiousness: center(raw.Conscientiousness),
+    Extraversion: center(raw.Extraversion),
+    Agreeableness: center(raw.Agreeableness),
+    Neuroticism: center(raw.Neuroticism)
   };
 
   const str: Scores = {
-    [TRAITS[0] as Trait]: strength(raw[TRAITS[0] as Trait]),
-    [TRAITS[1] as Trait]: strength(raw[TRAITS[1] as Trait]),
-    [TRAITS[2] as Trait]: strength(raw[TRAITS[2] as Trait]),
-    [TRAITS[3] as Trait]: strength(raw[TRAITS[3] as Trait]),
-    [TRAITS[4] as Trait]: strength(raw[TRAITS[4] as Trait])
+    Openness: strength(raw.Openness),
+    Conscientiousness: strength(raw.Conscientiousness),
+    Extraversion: strength(raw.Extraversion),
+    Agreeableness: strength(raw.Agreeableness),
+    Neuroticism: strength(raw.Neuroticism)
   };
 
   return { raw, centered: cent, strength: str };
@@ -445,7 +446,7 @@ export const getPersona = (traitScores: Scores, followUpTags = []) => {
   }
 
   // Assume traitScores is raw 0-100
-  const centered = Object.fromEntries(Object.entries(traitScores).map(([k, v]) => [k, center(v)]));
+  const centered: Scores = Object.fromEntries(Object.entries(traitScores).map(([k, v]) => [k, center(v)])) as Scores;
 
   const fits = personaFit(centered, personaWeights);
   return PERSONAS.find(p => p.name === fits[0].persona);
@@ -511,10 +512,10 @@ export async function getSecureGeoLocation(control = {}) {
     navigator.geolocation.getCurrentPosition(
       (position) => resolve(position.coords),
       (error) => reject(new Error(`Geolocation error: ${error.message}`)),
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000, signal: control.signal } // 10s timeout, 10min cache
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 } // removed signal
     );
   });
 }
 
-// Export TRAITS, PERSONAS, and security utilities
+// Export TRAITS and PERSONAS
 export { TRAITS, PERSONAS };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Quiz from './Quiz.tsx';
-import Results from './Results.tsx';
+import Quiz from './Quiz';
+import Results from './Results';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import SnappStarsPolicy from './SnappStarsPolicy';
