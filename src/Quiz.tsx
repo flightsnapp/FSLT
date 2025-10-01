@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { normalize, calculateTraitScores, personaFit } from '../utils/scoreEngine.ts';
-import { encryptQuizResult, getSecureGeoLocation, personaWeights } from './utils/personaCalculator.ts';
+import { normalize, calculateTraitScores, personaFit } from './utils/scoreEngine';
+import { getPersona, encryptQuizResult, getSecureGeoLocation, personaWeights } from './utils/personaCalculator';
 const Quiz = () => {
   const navigate = useNavigate();
   const [stage, setStage] = useState('welcome'); // welcome, core, follow-up, reveal, results
