@@ -1,25 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { normalize, personaFit } from './utils/scoreEngine.ts';
-import { getPersona, calculateTraitScores, encryptQuizResult, getSecureGeoLocation, personaWeights } from './utils/personaCalculator.ts';
+import { normalize, personaFit } from './utils/scoreEngine';
+import { getPersona, calculateTraitScores, encryptQuizResult, getSecureGeoLocation, personaWeights, Persona as ImportedPersona, Scores } from './utils/personaCalculator';
 
-// Define types
-interface Scores {
-  Openness: number;
-  Conscientiousness: number;
-  Extraversion: number;
-  Agreeableness: number;
-  Neuroticism: number;
-}
-
-interface Persona {
-  name: string;
-  description: string;
-  tags: string[];
-  example_trips: string[];
-  weights: Scores;
-}
 
 interface Question {
   question: string;
@@ -40,8 +24,8 @@ const Quiz: React.FC = () => {
   const [stage, setStage] = useState<Stage>('welcome');
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [scores, setScores] = useState<number[]>(new Array(10).fill(3));
-  const [prelimPersona, setPrelimPersona] = useState<Persona | null>(null);
-  const [finalPersona, setFinalPersona] = useState<Persona | null>(null);
+  const [prelimPersona, setPrelimPersona] = useState<ImportedPersona | null>(null);
+  const [finalPersona, setFinalPersona] = useState<ImportedPersona | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [progressFilled, setProgressFilled] = useState<number>(0);
   const [consent, setConsent] = useState<boolean>(false);
@@ -54,7 +38,7 @@ const Quiz: React.FC = () => {
   const [termsChecked, setTermsChecked] = useState<boolean>(false);
   const [geoConsent, setGeoConsent] = useState<string>('');
   const [region, setRegion] = useState<string>('');
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<number | null>(null);
 
   // 10 core questions
   const questions: Question[] = [
@@ -315,8 +299,10 @@ const Quiz: React.FC = () => {
     newScores[currentQuestion] = value;
     setScores(newScores);
     // Set timer for auto-advance after 1 second
-    clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = window.setTimeout(() => {
       if (currentQuestion < 9) {
         handleNext();
       } else {
@@ -341,7 +327,7 @@ const Quiz: React.FC = () => {
     const adjustedScores = sanitizedScores.map((score, idx) =>
       questions[idx].direction === 'reverse' ? 6 - score : score
     );
-    const traitScores: Scores = calculateTraitScores(adjustedScores);
+    const { raw: traitScores } = calculateTraitScores(adjustedScores);
     const persona = getPersona(traitScores);
     console.log("Calculated trait scores:", traitScores);
     console.log("Selected persona:", persona.name, "tags:", persona.tags);
@@ -366,8 +352,10 @@ const Quiz: React.FC = () => {
     newScores[currentFollowUp] = value;
     setFollowUpScores(newScores);
     // Auto-advance after 1 second
-    clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = window.setTimeout(() => {
       if (currentFollowUp < 2) {
         handleNextFollowUp();
       } else {
@@ -382,13 +370,13 @@ const Quiz: React.FC = () => {
 
   const handleRevealComplete = async () => {
     try {
-      const encrypted = await encryptQuizResult({ persona: finalPersona, scores, date: new Date() });
+      const encrypted = await encryptQuizResult({ persona: finalPersona!, scores, date: new Date() });
       localStorage.setItem('quizResult', encrypted);
       navigate('/results');
     } catch (error) {
       alert(`Encryption failed (${(error as Error).message}), using insecure storage for demo.`);
       // Fallback to insecure for MVP
-      localStorage.setItem('quizResult', JSON.stringify({ persona: finalPersona, scores, date: new Date() }));
+      localStorage.setItem('quizResult', JSON.stringify({ persona: finalPersona!, scores, date: new Date() }));
       navigate('/results');
     }
   };

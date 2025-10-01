@@ -1,5 +1,3 @@
-// Dot function implemented here since not in scoreEngine
-
 export type Vec = Record<string, number>;
 
 export function dot(a: Vec, b: Vec): number {
@@ -26,7 +24,7 @@ export function cosine(a: Vec, b: Vec): number {
 }
 
 export function cohesion(vectors: Vec[]): number {
-  if (vectors.length < 2) return 1;
+  if (vectors.length < 2) return vectors.length === 0 ? 0 : 1;
   let total = 0, count = 0;
   for (let i = 0; i < vectors.length; i++) {
     for (let j = i + 1; j < vectors.length; j++) {
@@ -38,7 +36,6 @@ export function cohesion(vectors: Vec[]): number {
 }
 
 export function roles(vec: Vec): Record<string, number> {
-  // Define role groups (tags to roles)
   const roleGroups = {
     Planner: ['Planner', 'Structured'],
     Spark: ['Spontaneous', 'Last-Minute', 'YOLO', 'Group', 'Nightlife', 'Festival'],
@@ -58,9 +55,9 @@ export function roles(vec: Vec): Record<string, number> {
 }
 
 export function complementarity(vectors: Vec[]): number {
+  if (vectors.length === 0) return 0;
   if (vectors.length === 1) return 1;
 
-  // Get all roles presence
   const distinctRoles = new Set<string>();
   let wildcardCount = 0, glueCount = 0;
 
@@ -84,6 +81,7 @@ export function complementarity(vectors: Vec[]): number {
 }
 
 export function squadScore(vecs: Vec[]): { cohesion: number, complementarity: number, score: number } {
+  if (vecs.length === 0) return { cohesion: 0, complementarity: 0, score: 0 };
   if (vecs.length === 1) return { cohesion: 1, complementarity: 1, score: 1 };
 
   const coh = cohesion(vecs);

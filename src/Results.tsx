@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { decryptQuizResult } from './utils/personaCalculator.ts';
+import { decryptQuizResult } from './utils/personaCalculator';
 
 // Define types
 interface Persona {
@@ -52,9 +52,16 @@ const Results: React.FC = () => {
   const decryptQuizResultOld = async (encryptedData: string): Promise<QuizResult> => {
     const bytes = new Uint8Array(atob(encryptedData).split('').map(c => c.charCodeAt(0)));
     const keyStr = process.env.REACT_APP_CRYPTO_KEY || 'flight-snapp-quiz-result';
+    const baseKey = await crypto.subtle.importKey(
+      'raw',
+      new TextEncoder().encode(keyStr),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveKey']
+    );
     const key = await crypto.subtle.deriveKey(
       { name: 'PBKDF2', salt: new Uint8Array(16), iterations: 100000, hash: 'SHA-256' },
-      new TextEncoder().encode(keyStr),
+      baseKey,
       { name: 'AES-GCM', length: 256 },
       false,
       ['decrypt']

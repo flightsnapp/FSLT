@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PERSONAS } from './utils/personaCalculator.ts';
+import { PERSONAS } from './utils/personaCalculator';
 
 // Define Persona type for type safety
 interface Persona {
