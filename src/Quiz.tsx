@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { normalize, personaFit } from './utils/scoreEngine';
 import { getPersona, calculateTraitScores, encryptQuizResult, getSecureGeoLocation, personaWeights, Persona as ImportedPersona, Scores } from './utils/personaCalculator';
 
-
 interface Question {
   question: string;
   trait: string;
@@ -404,6 +403,23 @@ const Quiz: React.FC = () => {
     }
   };
 
+  const handleModalProceed = async () => {
+    if (!termsChecked) {
+      alert('Please agree to the Terms of Service and Privacy Policy.');
+      return;
+    }
+    if (geoConsent === 'yes') {
+      await getLocation();
+    } else if (geoConsent === 'no') {
+      setDepartureCity(region || 'Global');
+    } else {
+      alert('Please select a location consent option.');
+      return;
+    }
+    setModalOpen(false);
+    setStage('core');
+  };
+
   const ParticleBurst: React.FC<{ visible: boolean }> = ({ visible }) => (
     <AnimatePresence>
       {visible && (
@@ -545,51 +561,48 @@ const Quiz: React.FC = () => {
     );
   };
 
-  const handleModalProceed = async () => {
-    if (!termsChecked) {
-      alert('Please agree to the Terms of Service and Privacy Policy.');
-      return;
-    }
-    if (geoConsent === 'yes') {
-      await getLocation();
-    } else if (geoConsent === 'no') {
-      setDepartureCity(region || 'Global');
-    } else {
-      alert('Please select a location consent option.');
-      return;
-    }
-    setModalOpen(false);
-    setStage('core');
-  };
-
+  // Inside the Quiz component, update the welcome stage
   if (stage === 'welcome') {
     return (
       <div className="page-container">
         <div className="page-content flex flex-col items-center justify-center text-white">
-          <h1 className="text-4xl font-bold mb-6">Discover Your Travel Persona</h1>
-          <p className="mb-8 text-center">Let's figure out your yolo travel vibe with rapid-fire questions!</p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 bg-[#00FF7F] text-black font-bold rounded-lg"
-            onClick={() => setModalOpen(true)}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
           >
-            Start Quiz
-          </motion.button>
-          {isModalOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-[rgba(26,42,68,0.95)] text-[#3DB2C2] p-6 rounded-lg max-w-2xl w-full max-h-full overflow-y-auto border border-[#00FFFF]">
+            <h1 className="text-4xl font-bold mb-6">Discover Your Travel Persona</h1>
+            <p className="mb-8 text-center">Let's figure out your yolo travel vibe with rapid-fire questions!</p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-4 bg-[#00FF7F] text-black font-bold rounded-lg"
+              onClick={() => setModalOpen(true)}
+            >
+              Start Quiz
+            </motion.button>
+          </motion.div>
+          <AnimatePresence>
+            {isModalOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.3 }}
+                className="relative bg-[rgba(26,42,68,0.95)] text-[#3DB2C2] p-6 rounded-lg w-full max-w-lg border border-[#00FFFF] mt-4 z-50"
+              >
                 <h2 className="text-2xl font-bold mb-4">Welcome to Flightsnapp!</h2>
                 <p className="mb-4">We're thrilled to curate your dream YOLO escape—let's spin some personalized travel magic! Before we dive in:</p>
                 <ul className="list-disc pl-6 mb-4">
                   <li>
-                    <strong>Purpose:</strong> Your Big 5 quiz responses power our hybrid AI curator to deliver hyper-personalized, one-of-a-kind recommendations tailored to your personality (e.g., adventure spins for high Openness or serene retreats for low Neuroticism).
+                    <strong>Purpose:</strong> Your quiz responses power our hybrid AI curator to deliver hyper-personalized, one-of-a-kind recommendations tailored to your personality (e.g., adventure spins for high Openness or serene retreats for low Neuroticism).
                   </li>
                   <li>
                     <strong>Privacy:</strong> We prioritize your data like a 5-star vault—responses are anonymized, encrypted, and stored securely. No personally identifiable info is collected unless you share it. Dive deeper into our{' '}
-                    <a href="/privacy-policy" className="text-blue-400 underline" target="_blank">
+                    
                       Privacy Policy
-                    </a>
+                    
                     .
                   </li>
                   <li>
@@ -607,15 +620,10 @@ const Quiz: React.FC = () => {
                       onChange={(e) => setTermsChecked(e.target.checked)}
                       className="mr-2"
                     />
-                    I agree to the{' '}
-                    <a href="/terms-of-service" className="text-blue-400 underline" target="_blank">
-                      Terms of Service
-                    </a>{' '}
-                    and<br />
-                    <a href="/privacy-policy" className="text-blue-400 underline" target="_blank">
-                      Privacy Policy
-                    </a>{' '}
-                    (required to unlock your personalized snaps).
+                    I agree to the
+                     Terms of Service
+                    and Privacy Policy
+                    (required).
                   </label>
                 </div>
                 <div className="mb-4">
@@ -662,18 +670,27 @@ const Quiz: React.FC = () => {
                     </div>
                   )}
                 </div>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 bg-[#00FF7F] text-black font-bold rounded disabled:bg-gray-600 disabled:cursor-not-allowed"
-                  disabled={!termsChecked || !geoConsent || (geoConsent === 'no' && !region)}
-                  onClick={handleModalProceed}
-                >
-                  Let's Snap to It!
-                </motion.button>
-              </div>
-            </div>
-          )}
+                {geoError && <p className="text-red-500 mb-4">{geoError}</p>}
+                <div className="flex justify-end space-x-4">
+                  <button
+                    className="px-4 py-2 bg-gray-600 rounded"
+                    onClick={() => setModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-6 py-3 bg-[#00FF7F] text-black font-bold rounded disabled:bg-gray-600 disabled:cursor-not-allowed"
+                    disabled={!termsChecked || !geoConsent || (geoConsent === 'no' && !region)}
+                    onClick={handleModalProceed}
+                  >
+                    {isGeoLoading ? 'Loading...' : 'Let’s Snap to It!'}
+                  </motion.button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     );
