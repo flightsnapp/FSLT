@@ -1,10 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
 import { decryptQuizResult, Persona } from './utils/personaCalculator';
 import { topPackages, weightsFromPersonaTags, Pkg, TagWeight, scorePackage } from './utils/scorePackage';
 import { squadScore, makeSquadmates } from './utils/squadDemo';
 import catalog from './utils/mock_packages.json';
+
+const stripePromise = loadStripe('pk_test_51S0S0I0vUOeFawdmUtuWzmInQT5Ua9XSB0RxnWm4Qq0CCz64zpn3fTSWdXz5s5w3TkR3o05JmpxnU8rxEh4Tu3mZ00b8pkyknf');
 
 const Results = () => {
   const navigate = useNavigate();
@@ -223,6 +226,32 @@ const Results = () => {
     window.open(url, '_blank');
   };
 
+  const handleUnlockBeta = async () => {
+    try {
+      const stripe = await stripePromise;
+      if (!stripe) {
+        alert('Stripe not loaded. Please try again.');
+        return;
+      }
+      const response = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const { sessionId, error } = await response.json();
+      if (error) {
+        alert('Checkout failed: ' + error);
+        return;
+      }
+      if (!sessionId) {
+        alert('Failed to create checkout session. Please try again.');
+        return;
+      }
+      await (stripe as any).redirectToCheckout({ sessionId }); // Type assertion to bypass TS error
+    } catch (error) {
+      alert('Checkout failed: ' + (error instanceof Error ? error.message : String(error)));
+    }
+  };
+
   if (error) {
     return (
       <div className="page-container">
@@ -380,17 +409,9 @@ const Results = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-6 py-3 bg-[#00FF7F] text-black font-bold rounded-lg"
-              onClick={() => alert('Beta access checkout coming soon (demo).')}
+              onClick={handleUnlockBeta}
             >
-              Get Beta Access — $5
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 bg-[#00FF7F] text-black font-bold rounded-lg"
-              onClick={() => alert('Founder Pass checkout coming soon (demo).')}
-            >
-              Founder Pass — $50
+              UNLOCK BETA Q1 2026
             </motion.button>
           </div>
         </motion.div>
