@@ -27,5 +27,3 @@ yarn-error.log*
 Thumbs.db
 node_modules
 
-# Local Netlify folder
-.netlify
