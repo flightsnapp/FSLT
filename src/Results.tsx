@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
+import type { Stripe } from '@stripe/stripe-js'; // For static type reference
 import { decryptQuizResult, Persona } from './utils/personaCalculator';
 import { topPackages, weightsFromPersonaTags, Pkg, TagWeight, scorePackage } from './utils/scorePackage';
 import { squadScore, makeSquadmates } from './utils/squadDemo';
@@ -226,31 +227,38 @@ const Results = () => {
     window.open(url, '_blank');
   };
 
-  const handleUnlockBeta = async () => {
-    try {
-      const stripe = await stripePromise;
-      if (!stripe) {
-        alert('Stripe not loaded. Please try again.');
-        return;
-      }
-      const response = await fetch('/.netlify/functions/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const { sessionId, error } = await response.json();
-      if (error) {
-        alert('Checkout failed: ' + error);
-        return;
-      }
-      if (!sessionId) {
-        alert('Failed to create checkout session. Please try again.');
-        return;
-      }
-      await (stripe as any).redirectToCheckout({ sessionId }); // Type assertion to bypass TS error
-    } catch (error) {
-      alert('Checkout failed: ' + (error instanceof Error ? error.message : String(error)));
+const handleUnlockBeta = async () => {
+  try {
+    const stripe = await stripePromise;
+    if (!stripe) {
+      alert('Stripe not loaded. Please try again.');
+      return;
     }
-  };
+    const response = await fetch('/.netlify/functions/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        persona: persona?.name || 'User', // Your personalization, with fallback
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    }
+    const { sessionId, error } = await response.json();
+    if (error) {
+      alert('Checkout failed: ' + error);
+      return;
+    }
+    if (!sessionId) {
+      alert('Failed to create checkout session. Please try again.');
+      return;
+    }
+    // Match deployed: Use 'as any' to bypass TS (works since method exists at runtime)
+    await (stripe as any).redirectToCheckout({ sessionId });
+  } catch (error) {
+    alert('Checkout failed: ' + (error instanceof Error ? error.message : String(error)));
+  }
+};
 
   if (error) {
     return (
@@ -270,7 +278,6 @@ const Results = () => {
       </div>
     );
   }
-
   if (!persona) {
     return (
       <div className="page-container">
@@ -280,7 +287,6 @@ const Results = () => {
       </div>
     );
   }
-
   return (
     <div className="page-container">
       <div className="page-content flex flex-col items-center justify-center text-white">
