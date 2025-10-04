@@ -10,6 +10,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "stripe": "^8.0.0",
     "@stripe/stripe-js": "^8.0.0",
     "framer-motion": "^10.12.4",
     "react": "^18.2.0",

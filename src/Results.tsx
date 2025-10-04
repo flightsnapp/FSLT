@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
-import type { Stripe } from '@stripe/stripe-js'; // For static type reference
 import { decryptQuizResult, Persona } from './utils/personaCalculator';
 import { topPackages, weightsFromPersonaTags, Pkg, TagWeight, scorePackage } from './utils/scorePackage';
 import { squadScore, makeSquadmates } from './utils/squadDemo';
@@ -17,6 +16,8 @@ const Results = () => {
   const [userTagWeights, setUserTagWeights] = useState<TagWeight | null>(null);
   const [squadMode, setSquadMode] = useState(false);
   const [squad, setSquad] = useState<{ mates: TagWeight[]; meta?: { score: number; cohesion: number; complementarity: number } } | null>(null);
+  const [isCheckoutVisible, setIsCheckoutVisible] = useState(false);
+  const [checkoutInstance, setCheckoutInstance] = useState<any>(null); // Store Checkout instance
 
   const shareTextOptions: Record<string, string[]> = {
     "The Wild Trailblazer": [
@@ -228,37 +229,70 @@ const Results = () => {
   };
 
 const handleUnlockBeta = async () => {
-  try {
-    const stripe = await stripePromise;
-    if (!stripe) {
-      alert('Stripe not loaded. Please try again.');
-      return;
+    try {
+      const stripe = await stripePromise;
+      if (!stripe) {
+        alert('Stripe not loaded. Please try again.');
+        return;
+      }
+      // Destroy existing Checkout instance if present
+      if (checkoutInstance) {
+        checkoutInstance.destroy();
+        setCheckoutInstance(null);
+        setIsCheckoutVisible(false);
+      }
+      const response = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          persona: persona?.name || 'User',
+        }),
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Server error: ${response.status} - ${errorText}`);
+      }
+      const { sessionId, error: sessionError } = await response.json();
+      if (sessionError) {
+        alert('Checkout failed: ' + sessionError);
+        return;
+      }
+      if (!sessionId) {
+        alert('Failed to create checkout session. Please try again.');
+        return;
+      }
+      const secretResponse = await fetch(`/.netlify/functions/create-checkout-session-client-secret?sessionId=${sessionId}`);
+      if (!secretResponse.ok) {
+        throw new Error(`Failed to fetch client secret: ${secretResponse.status}`);
+      }
+      const { clientSecret, error: secretError } = await secretResponse.json();
+      if (secretError) {
+        alert('Checkout failed: ' + secretError);
+        return;
+      }
+      // Initialize embedded Checkout
+      console.log('Initializing Checkout with clientSecret:', clientSecret);
+      const checkout = await stripe.initEmbeddedCheckout({ clientSecret });
+      console.log('Checkout instance created:', checkout);
+      setCheckoutInstance(checkout);
+      setIsCheckoutVisible(true);
+      // Ensure DOM is ready before mounting
+      setTimeout(() => {
+        const checkoutElement = document.getElementById('checkout');
+        if (checkoutElement) {
+          console.log('Mounting Checkout to #checkout');
+          checkout.mount('#checkout');
+        } else {
+          console.error('No #checkout element found');
+          alert('Checkout failed: No checkout element found on page');
+        }
+      }, 0); // Run after render
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert('Checkout failed: ' + (error instanceof Error ? error.message : String(error)));
     }
-    const response = await fetch('/.netlify/functions/create-checkout-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        persona: persona?.name || 'User', // Your personalization, with fallback
-      }),
-    });
-    if (!response.ok) {
-      throw new Error(`Server error: ${response.status}`);
-    }
-    const { sessionId, error } = await response.json();
-    if (error) {
-      alert('Checkout failed: ' + error);
-      return;
-    }
-    if (!sessionId) {
-      alert('Failed to create checkout session. Please try again.');
-      return;
-    }
-    // Match deployed: Use 'as any' to bypass TS (works since method exists at runtime)
-    await (stripe as any).redirectToCheckout({ sessionId });
-  } catch (error) {
-    alert('Checkout failed: ' + (error instanceof Error ? error.message : String(error)));
-  }
-};
+  };
+
 
   if (error) {
     return (
@@ -420,6 +454,14 @@ const handleUnlockBeta = async () => {
               UNLOCK BETA Q1 2026
             </motion.button>
           </div>
+            {/* Always render checkout div, hide with CSS */}
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: isCheckoutVisible ? 1 : 0, height: isCheckoutVisible ? '600px' : 0 }}
+            transition={{ duration: 0.3 }}
+            className="mt-4 w-full max-w-5xl"
+            id="checkout"
+          ></motion.div>
         </motion.div>
       </div>
     </div>

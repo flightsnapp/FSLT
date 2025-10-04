@@ -18,14 +18,14 @@ exports.handler = async (event) => {
               name: `Unlock Beta Access for ${persona}`,
               description: 'Early access to Flightsnapp Beta in Q1 2026',
             },
-            unit_amount: 1000, // $10 USD (in cents; adjust as needed)
+            unit_amount: 1000, // $10 USD (in cents)
           },
           quantity: 1,
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.BASE_URL}/results?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.BASE_URL}/results`,
+      ui_mode: 'embedded', // Required for embedded Checkout
+      return_url: `${process.env.BASE_URL}/results?session_id={CHECKOUT_SESSION_ID}`, // Replaces success_url
     });
 
     return {
