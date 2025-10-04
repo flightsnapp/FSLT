@@ -92,8 +92,7 @@
   },
     "party_pathfinder": {
       "name": "El Buscador de Fiesta",
-      "description": "Como Buscador de Fiesta, eres la vida electrizante del nightlife, chartando escenas sociales vibrantes y escapadas grupales donde la Extraversión enciende la diversión y Baja Conciencia desata spontaneidad pura. Flightsnapp's AI magic curates your playlist of joy: Random 
-spins for hot deals on festivals, persona-matched squads for epic vibes, and one-tap snaps blending affiliates for social dinners or events. Let's pathfind the party with intuitive, 5-star thrills reflecting your gregarious dreams!",
+      "description": "Como Buscador de Fiesta, eres la vida electrizante del nightlife, chartando escenas sociales vibrantes y escapadas grupales donde la Extraversión enciende la diversión y Baja Conciencia desata spontaneidad pura. Flightsnapp's AI magic curates your playlist of joy: Random spins for hot deals on festivals, persona-matched squads for epic vibes, and one-tap snaps blending affiliates for social dinners or events. Let's pathfind the party with intuitive, 5-star thrills reflecting your gregarious dreams!",
       "teaser": "Spineemos los hotspots de fiesta más calientes para tu squad!",
       "followUpQuestions": [
         {"question": "Las multitudes, el confeti y el bajo fuerte son mi hábitat natural.", "tag": "Festival"},

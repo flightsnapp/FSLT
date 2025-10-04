@@ -230,7 +230,64 @@
     "team": "Team"
   },
   "stripe": {
-    "product_name": "Unlock Beta Access for {{persona}}",
-    "description": "Early access to Flightsnapp Beta in Q1 2026"
+    "product_name": "Desbloquear Acceso Beta para {{persona}}",
+    "description": "Acceso anticipado a Beta de Flightsnapp en Q1 2026"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "effective_date_label": "Effective Date:",
+    "effective_date": "March 27, 2025",
+    "commitment": {
+      "title": "Our Commitment to Your Privacy",
+      "description1": "At Flightsnapp, we're all about safeguarding your privacy like a hidden gem retreat—it's the cornerstone of our mission to curate those hyper-personalized, one-of-a-kind YOLO escapes! We commit to collecting only the must-have data to spin our hybrid AI magic, delivering 5-star travel recommendations without snagging any personally identifiable info unless you choose to share it. Dive deeper into our",
+      "link_text": "Privacy Policy",
+      "description2": "."
+    },
+    "collect": {
+      "title": "1. Information We Collect",
+      "intro": "We're laser-focused on essentials to tailor your dream snaps, so here's what we gather:",
+      "quiz_label": "Quiz Responses:",
+"quiz": "Your fun answers to our Big 5 personality quiz let us decode your unique traits (like high Openness for bold adventures or low Neuroticism for chill retreats) and serve up personalized recommendations via our rule-based filters and ML personalization.",
+      "tech_label": "Technical Data:",
+      "tech": "We scoop up device details, IP addresses, and usage stats to fine-tune site performance, ensure seamless spins, and boost your overall experience—like optimizing for random deal discoveries or group package matches.",
+      "skip": "We skip the basics like your name, email, or direct IDs unless you voluntarily ping us (e.g., for beta access or support). No fuss, just fun curation."
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "effective_date_label": "Effective Date:",
+    "effective_date": "March 27, 2025",
+    "agreement": {
+      "title": "1. Agreement to Terms",
+      "description": "By hopping aboard Flightsnapp or joining our SnappStars program, you're agreeing to these Terms of Service ("Terms")—our roadmap for curating those hyper-personalized, one-of-a-kind YOLO escapes! If these vibes don't align with yours, feel free to explore elsewhere. Let's keep the journey fun and fair for all!"
+    },
+    "use": {
+      "title": "2. Use of Our Services",
+      "description": "Flightsnapp is your go-to for intuitive travel magic: Take our Big 5 quiz to unlock personalized snaps, spin for random deals, or match group packages by similar personas—all for personal, non-commercial joyrides. No misuse, interference, or unauthorized spins allowed—we're here to empower spontaneous, 5-star adventures like a vacation playlist reflecting your unique dreams!"
+    },
+    "responsibilities": {
+      "title": "3. User Responsibilities",
+      "description": "You're the captain of your inputs—ensure quiz responses, contact details, or any shared info are accurate and comply with laws (no illegal vibes here!). For SnappStars, that means verified listings, honest vibe tags (e.g., high Openness for exploratory hikes), and top-notch experiences. Keep it positive, respectful, and aligned with our Millennial/Gen Z ethos—let's curate joy without the drama!"
+    },
+    "snappstars": {
+      "title": "4. SnappStars Program (If Applicable)",
+      "description": "If you're shining as a SnappStar, welcome to the spotlight! Your unique properties/experiences fuel our hybrid curator—matching to personas like relaxed retreats for low Neuroticism or social spins for high Extraversion. Agree to our Program Agreement for details on eligibility (18+, verified listings, 4-star standards), commissions (10-15% to us, 80-85% payouts via Stripe with incentives for 5-star ratings), operational integrations (AI scans via Grok API, one-tap bookings), and legal perks (indemnity, IP licenses, data use for anonymized B2B insights). Let's partner to deliver magical, persona-driven escapes—referral bonuses ($50 per recruit) and premium subs ($19.99/mo) keep the growth fun and viral!"
+    },
+    "liability": {
+      "title": "5. Limitation of Liability",
+      "description": "Our snaps and recommendations are joyful suggestions only—Flightsnapp, our affiliates (like Amadeus or Tiqets), and SnappStars aren't liable for trip mishaps, losses, or real-world curveballs (e.g., booking glitches or adventure outcomes). Use at your own risk, and always double-check with partners. We're here for the fun, not the fine print drama!"
+    },
+    "ip": {
+      "title": "6. Intellectual Property",
+      "description": "All the tech, content, and curation wizardry on Flightsnapp (including quiz algorithms, snaps, and SnappStars integrations) belong to us or our licensors—protected like a secret travel spot! You grant us a royalty-free license for any shared content (e.g., Star listings or quiz data for ML tweaks), but can't copy, tweak, or distribute ours without permission. Let's respect the creative vibes that make our hybrid magic shine!"
+    },
+    "law": {
+      "title": "7. Governing Law",
+      "description": "These Terms cruise under the laws of Alberta, Canada—any disputes get resolved through binding arbitration per ADRIC rules there, keeping things smooth and local. Force majeure covers those unexpected layovers!"
+    },
+    "changes": {
+      "title": "8. Changes to Terms",
+      "description": "As we evolve (think new affiliate spins or ML upgrades), we'll refresh these Terms—check back for updates with a new effective date. Continued adventures or SnappStar shines mean you agree to the latest version. We'll notify you of big changes, so the fun never skips a beat!"
+    }
   }
 }
