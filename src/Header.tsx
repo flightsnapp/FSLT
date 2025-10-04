@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -42,7 +43,9 @@ const Header: React.FC = () => {
             </a>
           </div>
         </nav>
-        <motion.div className="social-icons" whileHover={{ scale: 1.05 }}>
+        <div className="flex items-center gap-4">
+          <LanguageSwitcher />
+          <motion.div className="social-icons" whileHover={{ scale: 1.05 }}>
           <motion.a
             href="https://twitter.com/share?text=Discover%20your%20travel%20persona%20with%20Flightsnapp!%20%23TravelPersona"
             target="_blank"
@@ -74,7 +77,8 @@ const Header: React.FC = () => {
           >
             <i className="fab fa-instagram"></i>
           </motion.a>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </motion.header>
   );

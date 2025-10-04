@@ -1,0 +1,114 @@
+{
+  "quiz": {
+    "welcome": "Descubre Tu Personalidad de Viaje",
+    "welcome_description": "¡Vamos a descubrir tu vibra de viajes yolo con preguntas rápidas!",
+    "start": "Empezar el Cuestionario",
+    "modal": {
+      "title": "¡Bienvenido a Flightsnapp!",
+      "description": "¡Estamos emocionados de curar tu escape YOLO perfecto—dejemos que suceda la magia de viajes personalizada!",
+      "purpose": "Propósito: Las respuestas de tu cuestionario de los Cinco Grandes impulsan nuestro curador híbrido de IA para ofrecer recomendaciones hiperpersonalizadas y únicas adaptadas a tu personalidad (por ejemplo, giros de aventura para Alta Apertura o retiros serenos para Baja Neuroticismo).",
+      "privacy": "Privacidad: Priorizamos tus datos como un cofre de 5 estrellas—las respuestas están anonimizadas, encriptadas y almacenadas de forma segura. No se recopila información de identificación personal a menos que la proporciones.",
+      "consent": "Consentimiento: Participar en el cuestionario es tu pase para la diversión—requerido para recomendaciones; opcional para usar datos anonimizados para refinar nuestra IA y mantener las vibras frescas para todos.",
+      "disclaimer": "Descargo de responsabilidad: Nuestras sugerencias son sugerencias divertidas únicamente—Flightsnapp no se responsabiliza por resultados de viajes, reservas o aventuras en el mundo real. Siempre verifica con socios como Amadeus o Tiqets.",
+      "agree_terms": "Acepto los",
+      "terms_link": "Términos de Servicio",
+      "and": "y",
+      "privacy_link": "Política de Privacidad",
+      "required": "(requerido)."
+    },
+    "location": {
+      "consent_title": "Consentimiento de Ubicación",
+      "description": "¿Quieres recomendaciones precisas adaptadas a tu rincón del mundo? ¡Otorga acceso a la ubicación para curación en tiempo real precisa!",
+      "yes": "¡Sí, transmíteme vibras precisas!",
+      "no": "No gracias, mantenlo global.",
+      "region": "Selecciona tu región:",
+      "error": "Error al obtener la ubicación:",
+      "loading": "Cargando...",
+      "proceed": "¡Vamos a hacer Snaps!",
+      "cancel": "Cancelar"
+    },
+    "questions": [
+      "Si alguien me reta a probar algo ridículo, ya estoy a mitad de camino.",
+      "Nuevo está sobrevalorado—mis clásicos de confort son los mejores cada vez.",
+      "Codifico por colores mis itinerarios como si estuviera lanzando una misión.",
+      "La preparación es opcional—las vibras decidirán el plan al aterrizar.",
+      "Dame un micrófono, una multitud y karaoke malo—modo vacaciones activado.",
+      "Las multitudes me drenan—mi playlist y mi burbuja me reviven.",
+      "Si un amigo me envía 'ayuda—caos de mudanza,' ya estoy sudando antes de responder.",
+      "Drama surge? Booking a una mesa solitaria y cuidando mi éxtasis.",
+      "Batería muerta, llaves perdidas, vuelo atrasado—mi cerebro toca sirenas rápido.",
+      "Cuando los viajes van de lado, río, giro y pido un piña colada."
+    ],
+    "feedback": {
+      "q1": ["Espíritu libre desbloqueado—te irá bien improvisando.", "Planeador suelto—suficiente estructura para jugar.", "Equilibrado—checklist cumple con vibras.", "Piloto de precisión—operaciones suaves por delante.", "General de logística—nada escapa al plan."],
+      "q2": ["Thrills nuevos > repeticiones—energía pura de descubrimiento.", "Inclina fresco sobre familiar—bien.", "Partes iguales clásico y curioso.", "Amante de la tradición—vibras confiables.", "Rey/reina de confort—familiar de cinco estrellas."],
+      "q3": ["Espíritu libre desbloqueado—te irá bien improvisando.", "Planeador suelto—suficiente estructura para jugar.", "Equilibrado—checklist cumple con vibras.", "Piloto de precisión—operaciones suaves por delante.", "General de logística—nada escapa al plan."],
+      "q4": ["Leal al horario—caos negado.", "Amigable con la estructura con espacio de movimiento.", "Realista vete-como-sea.", "Operador espontáneo—abraza el remolino.", "Tacitco YOLO—figuras al vivo."],
+      "q5": ["Combustible solo—quieto gana.", "Mayormente de bajo perfil con spice social.", "Ambivertido—puedes cambiar cualquier interruptor.", "Impulsado por gente—listo para escenario.", "Energía de headliner—surfer de multitud."],
+      "q6": ["Surfer de multitud—ruido es néctar.", "Inclinación social pero adaptable.", "Equilibrado—silencioso o con otros funciona.", "Inclinación solo—protege la batería.", "Lobo solitario certificado—paz es premium."],
+      "q7": ["Jefa de límites—planes son primero.", "Ayudante selectiva—energía de comercio justo.", "Suavona situacional—caso por caso.", "Ride-or-die confiable.", "Status santo—MVP del equipo."],
+      "q8": ["Amigo pegamento—des-dramas la habitación.", "Mediadora con necesidad.", "Flexible—ayuda o vete según sea necesario.", "Operador independiente—inapobado.", "Modo maverick—boleto solo asegurado."],
+      "q9": ["Deidad chill—armadura zen equipada.", "Mayormente calma—solo ondulaciones pequeñas.", "Pánico manejable—te adaptas.", "Planeador alerta—respaldo en espera.", "Atleta de ansiedad—listas salvan vidas."],
+      "q10": ["Capitán de contingencias—gusta del control.", "Realista preparada—guarda recibos.", "Neutral ve-como-sea.", "Especialista en giro—desafecto.", "Icono desimposicionado—caos es contenido."]
+    },
+    "question_number": "Pregunta {{current}}/{{total}}",
+    "refinement": "Pregunta de Refinamiento {{current}}/{{total}}",
+    "disagree": "Fuertemente en Desacuerdo",
+    "agree": "Fuertemente de Acuerdo",
+    "analyzing": "Analizando tus respuestas...",
+    "persona_reveal": "Tu Personalidad de Viaje:",
+    "see_results": "Ver Resultados"
+  },
+  "results": {
+    "title": "Tu Personalidad de Viaje: {{name}}",
+    "loading": "Cargando tu personalidad de viaje...",
+    "error": "Error",
+    "no_results": "No se encontraron resultados del cuestionario. Toma el cuestionario primero.",
+    "retake_quiz": "Toma de Nuevo el Cuestionario",
+    "share_on_x": "Compartir en X",
+    "unlock_beta": "DESBLOQUEAR BETA Q1 2026",
+    "squad_mode": "Modo Escuadrón",
+    "curated_trips": "Viajes Curados Snapp",
+    "beta_access": "Obtener Acceso Beta — $5",
+    "founder_pass": "Pase Founder — $50",
+    "demo_package": "Paquete demo — enlace de booking llegando pronto.",
+    "checkout_failed": "Pago fallido:",
+    "stripe_not_loaded": "Stripe no cargado. Intenta de nuevo.",
+    "session_creation_failed": "Error creando sesión de pago. Intenta de nuevo.",
+    "server_error": "Error de servidor:",
+    "persona_share": "¡Soy {{persona}} en @Flightsnapp! ¡Listo para aventuras de {{tag1}} y {{tag2}}! Snapp tu personalidad de viaje en www.flightsnapp.com!",
+    "because_youre": "Porque eres"
+  },
+  "personas": {
+    "wild_trailblazer": {
+      "name": "El Explorador Salvaje",
+      "teaser": "¿Ansías caminos inexplorados? ¡Traza tu propia ruta con giros aleatorios!",
+      "followUpQuestions": [
+        {"question": "Dame el caos sobre las listas de verificación—deja que la ciudad decida los giros de la trama.", "tag": "Spontaneous"},
+        {"question": "Si a los locales les gusta y los turistas se lo pierden, ese es mi brújula.", "tag": "Offbeat"},
+        {"question": "El amanecer es solo la after-party—una parada más, siempre.", "tag": "Nightlife"}
+      ]
+    },
+    "party_pathfinder": {
+      "name": "El Buscador de Fiesta",
+      "teaser": "Spineemos los hotspots de fiesta más calientes para tu squad!",
+      "followUpQuestions": [
+        {"question": "Las multitudes, el confeti y el bajo fuerte son mi hábitat natural.", "tag": "Festival"},
+        {"question": "Elijo destinos donde la noche se niega a terminar.", "tag": "Nightlife"},
+        {"question": "Los viajes golpean más duro con un squad de hype en marcación rápida.", "tag": "Group"}
+      ]
+    }
+  },
+  "footer": {
+    "privacy_policy": "Política de Privacidad",
+    "terms_of_service": "Términos de Servicio",
+    "snapp_stars_policy": "Programa Snapp Stars",
+    "persona_profiles": "Perfiles de Personas",
+    "vision": "Visión",
+    "team": "Equipo"
+  },
+  "stripe": {
+    "product_name": "Desbloquear Acceso Beta para {{persona}}",
+    "description": "Acceso anticipado a Beta de Flightsnapp en Q1 2026"
+  }
+}

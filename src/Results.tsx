@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { loadStripe } from '@stripe/stripe-js';
 import { decryptQuizResult, Persona } from './utils/personaCalculator';
 import { topPackages, weightsFromPersonaTags, Pkg, TagWeight, scorePackage } from './utils/scorePackage';
@@ -11,6 +12,7 @@ const stripePromise = loadStripe('pk_test_51S0S0I0vUOeFawdmUtuWzmInQT5Ua9XSB0Rxn
 
 const Results = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [persona, setPersona] = useState<Persona | null>(null);
   const [error, setError] = useState<string>('');
   const [userTagWeights, setUserTagWeights] = useState<TagWeight | null>(null);
@@ -18,6 +20,10 @@ const Results = () => {
   const [squad, setSquad] = useState<{ mates: TagWeight[]; meta?: { score: number; cohesion: number; complementarity: number } } | null>(null);
   const [isCheckoutVisible, setIsCheckoutVisible] = useState(false);
   const [checkoutInstance, setCheckoutInstance] = useState<any>(null); // Store Checkout instance
+
+  const englishKey = persona ? persona.name.toLowerCase().replace(/^the /, '').replace(/ /g, '_') : '';
+  const translatedName = persona ? t(`personas.${englishKey}.name`) : 'Persona Name';
+  const translatedDescription = persona ? t(`personas.${englishKey}.description`) : 'Description';
 
   const shareTextOptions: Record<string, string[]> = {
     "The Wild Trailblazer": [
@@ -298,7 +304,7 @@ const handleUnlockBeta = async () => {
     return (
       <div className="page-container">
         <div className="page-content flex flex-col items-center justify-center text-white">
-          <h2 className="text-2xl font-bold mb-4">Error</h2>
+          <h2 className="text-2xl font-bold mb-4">{t('results.error')}</h2>
           <p className="mb-4">{error}</p>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -306,7 +312,7 @@ const handleUnlockBeta = async () => {
             className="px-6 py-3 bg-[#00FF7F] text-black font-bold rounded-lg"
             onClick={() => navigate('/quiz')}
           >
-            Retake Quiz
+            {t('results.retake_quiz')}
           </motion.button>
         </div>
       </div>
@@ -316,7 +322,7 @@ const handleUnlockBeta = async () => {
     return (
       <div className="page-container">
         <div className="page-content flex flex-col items-center justify-center text-white">
-          <p>Loading your travel persona...</p>
+          <p>{t('results.loading')}</p>
         </div>
       </div>
     );
@@ -330,8 +336,8 @@ const handleUnlockBeta = async () => {
           transition={{ duration: 0.5 }}
           className="text-center w-full max-w-5xl"
         >
-          <h1 className="text-4xl font-bold mb-4">Your Travel Persona: {persona.name}</h1>
-          <p className="text-lg mb-6">{persona.description}</p>
+          <h1 className="text-4xl font-bold mb-4">{t('results.title', { name: translatedName })}</h1>
+          <p className="text-lg mb-6">{translatedDescription}</p>
           {!!persona.tags?.length && (
             <div className="flex flex-wrap justify-center mb-8 gap-2">
               {persona.tags.map(tag => (
@@ -347,7 +353,7 @@ const handleUnlockBeta = async () => {
           <div className="flex items-center justify-center gap-3 mb-6">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={squadMode} onChange={e => setSquadMode(e.target.checked)} />
-              <span className="text-sm">Squad Mode</span>
+              <span className="text-sm">{t('results.squad_mode')}</span>
             </label>
             {squad?.meta && (
               <span className="px-3 py-1 rounded-full bg-[#00FF7F] text-black text-sm font-bold">
@@ -355,7 +361,7 @@ const handleUnlockBeta = async () => {
               </span>
             )}
           </div>
-          <h2 className="text-2xl font-bold mb-4">Curated Snapp Trips</h2>
+          <h2 className="text-2xl font-bold mb-4">{t('results.curated_trips')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {top3.map(({ pkg, matched }) => (
               <motion.div

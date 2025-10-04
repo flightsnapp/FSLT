@@ -1,0 +1,236 @@
+{
+  "quiz": {
+    "welcome": "Discover Your Travel Persona",
+    "welcome_description": "Let's figure out your yolo travel vibe with rapid-fire questions!",
+    "start": "Start Quiz",
+    "modal": {
+      "title": "Welcome to Flightsnapp!",
+      "description": "We're thrilled to curate your dream YOLO escape—let's spin some personalized travel magic!",
+      "purpose": "Purpose: Your Big 5 quiz responses power our hybrid AI curator to deliver hyper-personalized, one-of-a-kind recommendations tailored to your personality (e.g., adventure spins for high Openness or serene retreats for low Neuroticism).",
+      "privacy": "Privacy: We prioritize your data like a 5-star vault—responses are anonymized, encrypted, and stored securely. No personally identifiable info is collected unless you share it.",
+      "consent": "Consent: Participating in the quiz is your ticket to fun—required for recommendations; optional for using anonymized data to refine our AI and keep the vibes fresh for everyone.",
+      "disclaimer": "Disclaimer: Our snaps are joyful suggestions only—Flightsnapp isn't responsible for trip outcomes, bookings, or real-world adventures. Always verify details with partners like Amadeus or Tiqets.",
+      "agree_terms": "I agree to the",
+      "terms_link": "Terms of Service",
+      "and": "and",
+      "privacy_link": "Privacy Policy",
+      "required": "(required)."
+    },
+    "location": {
+      "consent_title": "Location Consent",
+      "description": "Want spot-on recommendations tuned to your corner of the world? Grant us location access for precise, real-time curation!",
+      "yes": "Yes, beam me up precise vibes!",
+      "no": "No thanks, keep it global.",
+      "region": "Select your region:",
+      "error": "Failed to get location:",
+      "loading": "Loading...",
+      "proceed": "Let's Snap to It!",
+      "cancel": "Cancel"
+    },
+    "questions": [
+      "If someone dares me to try something ridiculous, I'm already halfway in.",
+      "New is overrated—my comfort classics slap every time.",
+      "I color-code itineraries like I'm launching a mission.",
+      "Prep is optional—vibes will decide the plan when we land.",
+      "Give me a mic, a crowd, and bad karaoke—vacation mode engaged.",
+      "Crowded rooms drain me—my playlist and bubble revive me.",
+      "If a friend texts 'help—moving chaos,' I'm sweating before I reply.",
+      "Drama erupts? I'm booking a solo table and minding my bliss.",
+      "Dead battery, lost keys, delayed flight—my brain hits sirens fast.",
+      "When trips go sideways, I laugh, pivot, and order a piña colada."
+    ],
+    "feedback": {
+      "q1": ["Free spirit unlocked—you'll wing it just fine.", "Loose planner—enough structure to play.", "Balanced—checklist meets vibes.", "Precision pilot—smooth ops ahead.", "General of logistics—nothing escapes the plan."],
+      "q2": ["New thrills > reruns—pure discovery energy.", "Leans fresh over familiar—nice.", "Equal parts classic and curious.", "Tradition lover—reliable vibes.", "Comfort king/queen—five-star familiar."],
+      "q3": ["Free spirit unlocked—you'll wing it just fine.", "Loose planner—enough structure to play.", "Balanced—checklist meets vibes.", "Precision pilot—smooth ops ahead.", "General of logistics—nothing escapes the plan."],
+      "q4": ["Schedule loyalist—chaos denied.", "Structure-friendly with wiggle room.", "Go-with-the-flow realist.", "Spontaneous operator—embraces the swirl.", "YOLO tactician—we'll figure it out live."],
+      "q5": ["Solo fuel—quiet wins.", "Mostly low-key with social spice.", "Ambivert—you can flip either switch.", "People-powered—stage ready.", "Headliner energy—crowd surfer."],
+      "q6": ["Crowd surfer—noise is nectar.", "Social-leaning but adaptable.", "Balanced—alone or together works.", "Solo-leaning—protects the battery.", "Certified lone wolf—peace is premium."],
+      "q7": ["Boundary boss—plans come first.", "Selective helper—fair trade energy.", "Situational softie—case by case.", "Reliable ride-or-die.", "Saint status—crew's MVP."],
+      "q8": ["Glue friend—de-dramas the room.", "Mediator-leaning when needed.", "Flexible—help or dip as required.", "Independent operator—unbothered.", "Maverick mode—solo ticket secured."],
+      "q9": ["Chill deity—zen armor equipped.", "Mostly calm—small ripples only.", "Manageable jitters—you adapt.", "Alert planner—backup on standby.", "Anxiety athlete—lists save lives."],
+      "q10": ["Contingency captain—likes control.", "Prepared realist—keeps receipts.", "Roll-with-it neutral.", "Unfazed—pivot specialist.", "Unbothered icon—chaos is content."]
+    },
+    "question_number": "Question {{current}}/{{total}}",
+    "refinement": "Refinement Question {{current}}/{{total}}",
+    "disagree": "Strongly Disagree",
+    "agree": "Strongly Agree",
+    "analyzing": "Analyzing your responses...",
+    "persona_reveal": "Your Travel Persona:",
+    "see_results": "See Results"
+  },
+  "results": {
+    "title": "Your Travel Persona: {{name}}",
+    "loading": "Loading your travel persona...",
+    "error": "Error",
+    "no_results": "No quiz results found. Please take the quiz first.",
+    "retake_quiz": "Retake Quiz",
+    "share_on_x": "Share on X",
+    "unlock_beta": "UNLOCK BETA Q1 2026",
+    "squad_mode": "Squad Mode",
+    "curated_trips": "Curated Snapp Trips",
+    "beta_access": "Get Beta Access — $5",
+    "founder_pass": "Founder Pass — $50",
+    "demo_package": "Demo package — booking link coming soon.",
+    "checkout_failed": "Checkout failed:",
+    "stripe_not_loaded": "Stripe not loaded. Please try again.",
+    "session_creation_failed": "Failed to create checkout session. Please try again.",
+    "server_error": "Server error:",
+    "persona_share": "I'm a {{persona}} on @Flightsnapp! Ready for {{tag1}} and {{tag2}} adventures! Snapp your travel persona at www.flightsnapp.com!",
+    "because_youre": "Because you're"
+  },
+  "personas": {
+  "wild_trailblazer": {
+    "name": "The Wild Trailblazer",
+    "description": "You're the ultimate Wild Trailblazer—a fearless explorer who thrives on uncharted territories, bold thrills, and cultural dives, powered by high Openness and Extraversion for that novel, high-energy wanderlust per Big 5 insights. Flightsnapp's hybrid curator spins hyper-personalized snaps just for you: random slot-machine deals on off-the-beaten-path gems, group packages syncing with fellow adventurers, and seamless affiliate ties for guided eco-tours or unique off-grid stays. Let's blaze trails with intuitive, joyful vibes like a vacation playlist echoing your spontaneous dreams!",
+    "teaser": "Crave uncharted paths? Blaze your own trail with random spins!",
+    "followUpQuestions": [
+      {"question": "Give me chaos over checklists—let the city decide the plot twists.", "tag": "Spontaneous"},
+      {"question": "If locals love it and tourists miss it, that's my compass.", "tag": "Offbeat"},
+      {"question": "Sunrise is just the after-party—one more stop, always.", "tag": "Nightlife"}
+    ]
+  },
+    "party_pathfinder": {
+      "name": "The Party Pathfinder",
+      "description": "As the Party Pathfinder, you're the electrifying life of the nightlife, charting vibrant social scenes and group escapades where Extraversion sparks the fun and low Conscientiousness unleashes pure spontaneity. Flightsnapp's AI magic curates your playlist of joy: Random spins for hot deals on festivals, persona-matched squads for epic vibes, and one-tap snaps blending affiliates for social dinners or events. Let's pathfind the party with intuitive, 5-star thrills reflecting your gregarious dreams!",
+      "teaser": "Let's spin the hottest party spots for your squad!",
+      "followUpQuestions": [
+        {"question": "Crowds, confetti, and bass drops are my natural habitat.", "tag": "Festival"},
+        {"question": "I pick destinations where the night refuses to end.", "tag": "Nightlife"},
+        {"question": "Trips hit harder with a hype squad on speed dial.", "tag": "Group"}
+      ]
+    },
+    "solo_dreamer": {
+      "name": "The Solo Dreamer",
+      "description": "Embrace your inner Solo Dreamer—a reflective wanderer chasing quiet inspiration in creative havens, where high Openness unlocks artistic depths and low Extraversion nurtures introspective serenity. Flightsnapp's hybrid curator dreams up your perfect solo snaps: Flexible date options for serene getaways, random spins for budget-friendly wellness retreats, and seamless ties to affiliates for workshops or unique hideaways. Let's dream solo with joyful, intuitive curation like a vacation playlist whispering your whimsical aspirations!",
+      "teaser": "Discover your inner spark in serene solitude with flexible dates.",
+      "followUpQuestions": [
+        {"question": "Solo time turns my brain into an art studio.", "tag": "Solo"},
+        {"question": "Silence and soft light beat schedules and small talk.", "tag": "Wellness"},
+        {"question": "I map trips by indie galleries, cafes, and poetry corners.", "tag": "Cultural"}
+      ]
+    },
+    "easygoing_roamer": {
+      "name": "The Easygoing Roamer",
+      "description": "Flow like the Easygoing Roamer—a chill nomad drifting to relaxed, offbeat oases where high Openness invites novelty and low Conscientiousness embraces effortless wanderings. Flightsnapp's curator roams with you: Random spins for eco-deals under $500, flexible dates for spontaneous jaunts, and affiliate blends for unique stays or breezy flights. Let's roam easy with intuitive, joyful vibes curating a vacation playlist of your laid-back dreams!",
+      "teaser": "Go where the vibe feels right—no plans needed, just random deals!"
+    },
+    "adventure_architect": {
+      "name": "The Adventure Architect",
+      "description": "Design like the Adventure Architect—a strategic visionary building epic quests with balanced Openness and Conscientiousness for structured thrills, cooled by low Neuroticism for unflappable calm. Flightsnapp's curator architects your blueprint: Rule-based filters for eco-friendly plans, ML personalization for novel twists, and group similarities for shared expeditions via affiliates for tours or flexible payments. Let's architect adventures with joyful, intuitive curation like a vacation playlist mapping your bold blueprints!",
+      "teaser": "Build your perfect adventure, step by step with AI curation!"
+    },
+    "comfort_crusader": {
+      "name": "The Comfort Crusader",
+      "description": "Cruise as the Comfort Crusader—a warm seeker of cozy luxuries and familiar havens, where high Agreeableness fosters social ease and low Openness favors traditional comforts. Flightsnapp's curator crusades for your bliss: One-tap snaps for all-inclusive retreats, group packages for family vibes, and affiliate blends for resorts or cruises. Let's crusade comfortably with intuitive, joyful vibes curating a vacation playlist of your soothing sanctuaries!",
+      "teaser": "Relax in style—comfort is your compass with one-tap Snaps!"
+    },
+    "quiet_traditionalist": {
+      "name": "The Quiet Traditionalist",
+      "description": "Step into the Quiet Traditionalist—a structured sage savoring classic journeys and historical charms, with high Conscientiousness for planning and low Openness/Extraversion for peaceful solitude. Flightsnapp's curator traditions your path: Rule-based filters for budget classics, solo snaps with affiliate gems for tours, and random spins for cultural discoveries. Let's tradition quietly with intuitive, joyful curation like a vacation playlist echoing your timeless tales!",
+      "teaser": "Step back in time with a perfectly planned trip."
+    },
+    "steady_socialite": {
+      "name": "The Steady Socialite",
+      "description": "Mingle as the Steady Socialite—a reliable connector thriving on vibrant group vibes and familiar fun, where Extraversion and Agreeableness spark social harmony and low Neuroticism adds unflappable ease. Flightsnapp's curator socialites your scene: Persona matches for crew packages, affiliate blends for activities or villas, and referral bonuses for growing the party. Let's socialize steadily with intuitive, joyful curation like a vacation playlist of your friendly festivities!",
+      "teaser": "Gather your crew for an unforgettable getaway with persona matches!"
+    },
+    "nervous_nomad": {
+      "name": "The Nervous Nomad",
+      "description": "Navigate as the Nervous Nomad—a cautious dreamer drawn to safe, inspiring havens where high Neuroticism favors low-risk paths balanced by Openness for creative sparks. Flightsnapp's curator nomads gently: Guided snaps for eco-friendly options, flexible dates for peace of mind, and affiliate reassurances for tours or wellness retreats. Let's nomad nervously with intuitive, joyful curation like a vacation playlist easing your exploratory edges!",
+      "teaser": "Ease into adventure at your own pace with reassuring curation."
+    },
+    "coolheaded_captain": {
+      "name": "The Coolheaded Captain",
+      "description": "Captain as the Coolheaded Captain—a poised leader charting seamless group voyages with high Conscientiousness for organization and low Neuroticism for steady calm. Flightsnapp's curator captains your crew: Rule-based plans for flawless itineraries, ML matches for group similarities, and affiliate sails for flights or gear. Let's captain coolly with intuitive, joyful curation like a vacation playlist steering your collective dreams!",
+      "teaser": "Lead the way with confidence and precision in group packages!"
+    },
+    "impulsive_influencer": {
+      "name": "The Impulsive Influencer",
+      "description": "Influence as the Impulsive Influencer—a charismatic spark chasing last-minute thrills and viral shares, where low Conscientiousness ignites spontaneity and high Extraversion/Openness amps social novelty. Flightsnapp's curator influences your feed: Random spins for epic deals, Instagram-ready snaps with events, and referral growth for your network. Let's influence impulsively with intuitive, joyful curation like a vacation playlist capturing your viral visions!",
+      "teaser": "Ready for a last-minute getaway? Let's make it epic with spins!"
+    },
+    "lone_maverick": {
+      "name": "The Lone Maverick",
+      "description": "Maverick as the Lone Maverick—a bold independent forging off-grid paths and unique quests, with high Openness for novelty and low Extraversion/Agreeableness for solo freedom. Flightsnapp's curator mavericks your trail: Budget adventures in tents, eco spins for island retreats, and flexible customizations for your edge. Let's maverick lone with intuitive, joyful curation like a vacation playlist charting your independent odysseys!",
+      "teaser": "Forge your own path, far from the crowd with unique customizations."
+    },
+    "friendly_voyager": {
+      "name": "The Friendly Voyager",
+      "description": "Voyage as the Friendly Voyager—a warm connector linking with locals and explorers in spontaneous, eco-conscious jaunts, fueled by high Agreeableness/Extraversion for heartfelt interactions. Flightsnapp's curator voyages friendly: Group similarities for shared tours, flexible payments for festivals, and affiliate warmth for homestays. Let's voyage friendly with intuitive, joyful curation like a vacation playlist weaving your social stories!",
+      "teaser": "Make new friends on every journey with group similarities!"
+    },
+    "budget_buccaneer": {
+      "name": "The Budget Buccaneer",
+      "description": "Buccaneer as the Budget Buccaneer—a resourceful pirate hunting epic treasures on a shoestring, with high Openness for clever finds and low Conscientiousness/Agreeableness for flexible hunts. Flightsnapp's curator buccaneers your booty: Under $500 spins for backpacking deals, affiliate steals for hostel tours, and random foodie snaps. Let's buccaneer budget with intuitive, joyful curation like a vacation playlist plundering your savvy secrets!",
+      "teaser": "Big adventures, small budget—let's do this with under $500 spins!"
+    },
+    "lavish_logistician": {
+      "name": "The Lavish Logistician",
+      "description": "Logistics as the Lavish Logistician—a precise maestro orchestrating opulent escapes with flawless details, high Conscientiousness for organization and low Neuroticism for serene luxury. Flightsnapp's curator logisticians your lavish: Premium features for spa retreats, group upgrades, and exclusives for subs. Let's logistic lavish with intuitive, joyful curation like a vacation playlist pampering your polished pursuits!",
+      "teaser": "Indulge in a meticulously crafted escape with premium features."
+    },
+    "culture_chaser": {
+      "name": "The Culture Chaser",
+      "description": "Chase as the Culture Chaser—an empathetic seeker immersing in arts, traditions, and eco-wonders with high Openness/Agreeableness for curious connections. Flightsnapp's curator chases culture: AI personalization for museum snaps, local immersions, and beta exclusives for history walks. Let's chase culture with intuitive, joyful curation like a vacation playlist unveiling your curious chronicles!",
+      "teaser": "Uncover the heart of every destination with AI personalization."
+    },
+    "fearless_flyer": {
+      "name": "The Fearless Flyer",
+      "description": "Fly as the Fearless Flyer—a daring dynamo soaring into adrenaline highs and social thrills, with low Neuroticism for bold calm and high Openness/Extraversion for novel excitement. Flightsnapp's curator flies fearless: Spontaneous spins for extreme snaps, group adrenaline, and quick flights. Let's fly fearless with intuitive, joyful curation like a vacation playlist launching your thrilling tales!",
+      "teaser": "Take flight to your next thrill with spontaneous spins!"
+    },
+    "cozy_companion": {
+      "name": "The Cozy Companion",
+      "description": "Companion as the Cozy Companion—a nurturing bond-builder cherishing intimate comforts with loved ones, high Agreeableness for warmth and low Openness for familiar coziness. Flightsnapp's curator companions cozy: Group packages for family villas, budget comforts, and ease for beach houses. Let's companion cozy with intuitive, joyful curation like a vacation playlist hugging your heartfelt harmonies!",
+      "teaser": "Share cozy moments with your favorite people in group packages."
+    },
+    "restless_ruler": {
+      "name": "The Restless Ruler",
+      "description": "Rule as the Restless Ruler—an ambitious dynamo conquering new horizons with driven pursuits, high Extraversion/Neuroticism for motivated social conquests. Flightsnapp's curator rules restlessly: Curated ambitions for premium snaps, events, and insights tie-ins. Let's rule restlessly with intuitive, joyful curation like a vacation playlist commanding your conqueror chronicles!",
+      "teaser": "Rule the world, one trip at a time with curated ambitions!"
+    },
+    "zen_seeker": {
+      "name": "The Zen Seeker",
+      "description": "Seek as the Zen Seeker—a tranquil harmonizer finding peace in soulful sanctuaries, low Neuroticism for serene calm balanced by Openness/Agreeableness for empathetic wellness. Flightsnapp's curator seeks zen: Relaxing ML matches for yoga retreats, solo tranquility, and pro-environmental vibes for hot springs. Let's seek zen with intuitive, joyful curation like a vacation playlist soothing your spiritual serenades!",
+      "teaser": "Find your zen in serene escapes with relaxing ML matches."
+    },
+    "squad_strategist": {
+      "name": "The Squad Strategist",
+      "description": "Strategize as the Squad Strategist—a sociable planner orchestrating epic group quests with high Extraversion/Conscientiousness/Agreeableness for friendly coordination. Flightsnapp's curator strategizes squads: Persona similarities for ski trips, groups for getaways, and gamification badges for team retreats. Let's strategize squads with intuitive, joyful curation like a vacation playlist uniting your crew's collective cheers!",
+      "teaser": "Plan the ultimate squad adventure with persona similarities!"
+    },
+    "casual_curator": {
+      "name": "The Casual Curator",
+      "description": "Curate as the Casual Curator—a relaxed collector gathering unique gems with curious ease, high Openness for discovery and low Extraversion/Neuroticism for chill vibes. Flightsnapp's curator curates casually: Easy spins for food tours, affiliate art for galleries, and budget curiosities in markets. Let's curate casually with intuitive, joyful curation like a vacation playlist assembling your eclectic escapades!",
+      "teaser": "Curate your own collection of travel memories with easy spins."
+    },
+    "edgy_empath": {
+      "name": "The Edgy Empath",
+      "description": "Empathize as the Edgy Empath—an introspective soul seeking meaningful, offbeat paths with emotional depth, balanced traits for creative spontaneity and heartfelt connections. Flightsnapp's curator empaths edgy: Unique snaps for volunteer trips, urban art, and solo depth in retreats. Let's empath edgy with intuitive, joyful curation like a vacation playlist edging your empathetic explorations!",
+      "teaser": "Travel with heart and a touch of edge in unique Snaps."
+    },
+    "grounded_globetrotter": {
+      "name": "The Grounded Globetrotter",
+      "description": "Globetrot as the Grounded Globetrotter—a calm organizer exploring far horizons with novel plans, high Openness/Conscientiousness for structured adventures and low Neuroticism for steady footing. Flightsnapp's curator globetrots grounded: Hybrid curation for hiking snaps, historical matches, and pro-environmental filters for eco-tours. Let's globetrot grounded with intuitive, joyful curation like a vacation playlist grounding your global quests!",
+      "teaser": "Travel far, stay grounded with hybrid curation."
+    },
+    "homebound_hustler": {
+      "name": "The Homebound Hustler",
+      "description": "Hustle as the Homebound Hustler—a practical planner maximizing nearby gems with purpose, high Conscientiousness for structure and low Openness/Extraversion for familiar focus. Flightsnapp's curator hustles homebound: Quick snaps for staycations, budget drives for local parks, and short-hauls for weekends. Let's hustle homebound with intuitive, joyful curation like a vacation playlist hustling your local legends!",
+      "teaser": "Make every nearby trip count with quick, purposeful Snaps!"
+    }
+  },
+  "footer": {
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service",
+    "snapp_stars_policy": "Snapp Stars Program",
+    "persona_profiles": "Persona Profiles",
+    "vision": "Vision",
+    "team": "Team"
+  },
+  "stripe": {
+    "product_name": "Unlock Beta Access for {{persona}}",
+    "description": "Early access to Flightsnapp Beta in Q1 2026"
+  }
+}

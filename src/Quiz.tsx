@@ -1,25 +1,26 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { normalize, personaFit } from './utils/scoreEngine';
 import { getPersona, calculateTraitScores, encryptQuizResult, getSecureGeoLocation, personaWeights, Persona as ImportedPersona, Scores } from './utils/personaCalculator';
-
-interface Question {
-  question: string;
-  trait: string;
-  direction: 'direct' | 'reverse';
-  feedback: { [key: number]: string };
-}
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 interface FollowUpQuestion {
   question: string;
   tag: string;
 }
 
+interface QuestionTrait {
+  trait: string;
+  direction: 'direct' | 'reverse';
+}
+
 type Stage = 'welcome' | 'core' | 'follow-up' | 'reveal' | 'results';
 
 const Quiz: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [stage, setStage] = useState<Stage>('welcome');
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [scores, setScores] = useState<number[]>(new Array(10).fill(3));
@@ -39,129 +40,21 @@ const Quiz: React.FC = () => {
   const [region, setRegion] = useState<string>('');
   const timerRef = useRef<number | null>(null);
 
-  // 10 core questions
-  const questions: Question[] = [
-    {
-      question: "If someone dares me to try something ridiculous, I'm already halfway in.",
-      trait: "openness",
-      direction: "direct",
-      feedback: {
-        1: "Classic-comfort connoisseur—predictable can be perfect.",
-        2: "Comfort-first with a hint of curiosity. Solid.",
-        3: "Balanced explorer—open, but not reckless.",
-        4: "Certified novelty chaser—stories pending.",
-        5: "Unapologetic chaos magnet. We salute you."
-      }
-    },
-    {
-      question: "New is overrated—my comfort classics slap every time.",
-      trait: "openness",
-      direction: "reverse",
-      feedback: {
-        1: "New thrills > reruns—pure discovery energy.",
-        2: "Leans fresh over familiar—nice.",
-        3: "Equal parts classic and curious.",
-        4: "Tradition lover—reliable vibes.",
-        5: "Comfort king/queen—five-star familiar."
-      }
-    },
-    {
-      question: "I color-code itineraries like I'm launching a mission.",
-      trait: "conscientiousness",
-      direction: "direct",
-      feedback: {
-        1: "Free spirit unlocked—you'll wing it just fine.",
-        2: "Loose planner—enough structure to play.",
-        3: "Balanced—checklist meets vibes.",
-        4: "Precision pilot—smooth ops ahead.",
-        5: "General of logistics—nothing escapes the plan."
-      }
-    },
-    {
-      question: "Prep is optional—vibes will decide the plan when we land.",
-      trait: "conscientiousness",
-      direction: "reverse",
-      feedback: {
-        1: "Schedule loyalist—chaos denied.",
-        2: "Structure-friendly with wiggle room.",
-        3: "Go-with-the-flow realist.",
-        4: "Spontaneous operator—embraces the swirl.",
-        5: "YOLO tactician—we'll figure it out live."
-      }
-    },
-    {
-      question: "Give me a mic, a crowd, and bad karaoke—vacation mode engaged.",
-      trait: "extraversion",
-      direction: "direct",
-      feedback: {
-        1: "Solo fuel—quiet wins.",
-        2: "Mostly low-key with social spice.",
-        3: "Ambivert—you can flip either switch.",
-        4: "People-powered—stage ready.",
-        5: "Headliner energy—crowd surfer."
-      }
-    },
-    {
-      question: "Crowded rooms drain me—my playlist and bubble revive me.",
-      trait: "extraversion",
-      direction: "reverse",
-      feedback: {
-        1: "Crowd surfer—noise is nectar.",
-        2: "Social-leaning but adaptable.",
-        3: "Balanced—alone or together works.",
-        4: "Solo-leaning—protects the battery.",
-        5: "Certified lone wolf—peace is premium."
-      }
-    },
-    {
-      question: "If a friend texts 'help—moving chaos,' I'm sweating before I reply.",
-      trait: "agreeableness",
-      direction: "direct",
-      feedback: {
-        1: "Boundary boss—plans come first.",
-        2: "Selective helper—fair trade energy.",
-        3: "Situational softie—case by case.",
-        4: "Reliable ride-or-die.",
-        5: "Saint status—crew's MVP."
-      }
-    },
-    {
-      question: "Drama erupts? I'm booking a solo table and minding my bliss.",
-      trait: "agreeableness",
-      direction: "reverse",
-      feedback: {
-        1: "Glue friend—de-dramas the room.",
-        2: "Mediator-leaning when needed.",
-        3: "Flexible—help or dip as required.",
-        4: "Independent operator—unbothered.",
-        5: "Maverick mode—solo ticket secured."
-      }
-    },
-    {
-      question: "Dead battery, lost keys, delayed flight—my brain hits sirens fast.",
-      trait: "neuroticism",
-      direction: "direct",
-      feedback: {
-        1: "Chill deity—zen armor equipped.",
-        2: "Mostly calm—small ripples only.",
-        3: "Manageable jitters—you adapt.",
-        4: "Alert planner—backup on standby.",
-        5: "Anxiety athlete—lists save lives."
-      }
-    },
-    {
-      question: "When trips go sideways, I laugh, pivot, and order a piña colada.",
-      trait: "neuroticism",
-      direction: "reverse",
-      feedback: {
-        1: "Contingency captain—likes control.",
-        2: "Prepared realist—keeps receipts.",
-        3: "Roll-with-it neutral.",
-        4: "Unfazed—pivot specialist.",
-        5: "Unbothered icon—chaos is content."
-      }
-    }
+  const questionTraits: QuestionTrait[] = [
+    { trait: "openness", direction: "direct" },
+    { trait: "openness", direction: "reverse" },
+    { trait: "conscientiousness", direction: "direct" },
+    { trait: "conscientiousness", direction: "reverse" },
+    { trait: "extraversion", direction: "direct" },
+    { trait: "extraversion", direction: "reverse" },
+    { trait: "agreeableness", direction: "direct" },
+    { trait: "agreeableness", direction: "reverse" },
+    { trait: "neuroticism", direction: "direct" },
+    { trait: "neuroticism", direction: "reverse" }
   ];
+
+  // 10 core questions
+  const questions: string[] = (t('quiz.questions', { returnObjects: true }) || []) as string[];
 
   // Follow-up questions based on prelimPersona name
   const personalityQuestions: { [key: string]: FollowUpQuestion[] } = {
@@ -324,10 +217,10 @@ const Quiz: React.FC = () => {
     const sanitizedScores = scores.slice(0, 10).map(s => isNaN(s) || s < 1 || s > 5 ? 3 : s);
     // Adjust reversed questions: score = 6 - value to flip Likert scale
     const adjustedScores = sanitizedScores.map((score, idx) =>
-      questions[idx].direction === 'reverse' ? 6 - score : score
+      questionTraits[idx].direction === 'reverse' ? 6 - score : score
     );
     const { raw: traitScores } = calculateTraitScores(adjustedScores);
-    const persona = getPersona(traitScores);
+    const persona = getPersona(traitScores, [], t);
     console.log("Calculated trait scores:", traitScores);
     console.log("Selected persona:", persona.name, "tags:", persona.tags);
     setPrelimPersona(persona);
@@ -554,14 +447,13 @@ const Quiz: React.FC = () => {
           }
         `}</style>
         <div className="flex justify-between mt-2 text-sm">
-          <span>Strongly Disagree</span>
-          <span>Strongly Agree</span>
+          <span>{t('quiz.disagree')}</span>
+          <span>{t('quiz.agree')}</span>
         </div>
       </div>
     );
   };
 
-  // Inside the Quiz component, update the welcome stage
   if (stage === 'welcome') {
     return (
       <div className="page-container">
@@ -572,15 +464,15 @@ const Quiz: React.FC = () => {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <h1 className="text-4xl font-bold mb-6">Discover Your Travel Persona</h1>
-            <p className="mb-8 text-center">Let's figure out your yolo travel vibe with rapid-fire questions!</p>
+            <h1 className="text-4xl font-bold mb-6">{t('quiz.welcome')}</h1>
+            <p className="mb-8 text-center">{t('quiz.welcome_description')}</p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-[#00FF7F] text-black font-bold rounded-lg"
               onClick={() => setModalOpen(true)}
             >
-              Start Quiz
+              {t('quiz.start')}
             </motion.button>
           </motion.div>
           <AnimatePresence>
@@ -592,25 +484,13 @@ const Quiz: React.FC = () => {
                 transition={{ duration: 0.3 }}
                 className="relative bg-[rgba(26,42,68,0.95)] text-[#3DB2C2] p-6 rounded-lg w-full max-w-lg border border-[#00FFFF] mt-4 z-50"
               >
-                <h2 className="text-2xl font-bold mb-4">Welcome to Flightsnapp!</h2>
-                <p className="mb-4">We're thrilled to curate your dream YOLO escape—let's spin some personalized travel magic! Before we dive in:</p>
+                <h2 className="text-2xl font-bold mb-4">{t('quiz.modal.title')}</h2>
+                <p className="mb-4">{t('quiz.modal.description')}</p>
                 <ul className="list-disc pl-6 mb-4">
-                  <li>
-                    <strong>Purpose:</strong> Your quiz responses power our hybrid AI curator to deliver hyper-personalized, one-of-a-kind recommendations tailored to your personality (e.g., adventure spins for high Openness or serene retreats for low Neuroticism).
-                  </li>
-                  <li>
-                    <strong>Privacy:</strong> We prioritize your data like a 5-star vault—responses are anonymized, encrypted, and stored securely. No personally identifiable info is collected unless you share it. Dive deeper into our{' '}
-                    
-                      Privacy Policy
-                    
-                    .
-                  </li>
-                  <li>
-                    <strong>Consent:</strong> Participating in the quiz is your ticket to fun—required for recommendations; optional for using anonymized data to refine our AI and keep the vibes fresh for everyone.
-                  </li>
-                  <li>
-                    <strong>Disclaimer:</strong> Our snaps are joyful suggestions only—Flightsnapp isn't responsible for trip outcomes, bookings, or real-world adventures. Always verify details with partners like Amadeus or Tiqets.
-                  </li>
+                  <li>{t('quiz.modal.purpose')}</li>
+                  <li>{t('quiz.modal.privacy')}</li>
+                  <li>{t('quiz.modal.consent')}</li>
+                  <li>{t('quiz.modal.disclaimer')}</li>
                 </ul>
                 <div className="mb-4">
                   <label className="flex items-center">
@@ -620,15 +500,20 @@ const Quiz: React.FC = () => {
                       onChange={(e) => setTermsChecked(e.target.checked)}
                       className="mr-2"
                     />
-                    I agree to the
-                     Terms of Service
-                    and Privacy Policy
-                    (required).
+                    {t('quiz.modal.agree_terms')}
+                    <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="underline ml-1 mr-1">
+                      {t('quiz.modal.terms_link')}
+                    </a>
+                    {t('quiz.modal.and')}
+                    <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline ml-1">
+                      {t('quiz.modal.privacy_link')}
+                    </a>
+                    {t('quiz.modal.required')}
                   </label>
                 </div>
                 <div className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2">Location Consent</h3>
-                  <p className="mb-2">Want spot-on recommendations tuned to your corner of the world? Grant us location access for precise, real-time curation!</p>
+                  <h3 className="text-lg font-semibold mb-2">{t('quiz.location.consent_title')}</h3>
+                  <p className="mb-2">{t('quiz.location.description')}</p>
                   <label className="flex items-center mb-2">
                     <input
                       type="radio"
@@ -638,7 +523,7 @@ const Quiz: React.FC = () => {
                       onChange={(e) => setGeoConsent(e.target.value)}
                       className="mr-2"
                     />
-                    Yes, beam me up precise vibes!
+                    {t('quiz.location.yes')}
                   </label>
                   <label className="flex items-center mb-2">
                     <input
@@ -649,11 +534,11 @@ const Quiz: React.FC = () => {
                       onChange={(e) => setGeoConsent(e.target.value)}
                       className="mr-2"
                     />
-                    No thanks, keep it global.
+                    {t('quiz.location.no')}
                   </label>
                   {geoConsent === 'no' && (
                     <div id="region-select" className="mb-4">
-                      <h4 className="text-md font-semibold mb-2">Select your region</h4>
+                      <h4 className="text-md font-semibold mb-2">{t('quiz.location.region')}</h4>
                       {['Canada', 'USA', 'Mexico', 'Europe', 'Africa', 'Australia', 'Asia'].map(r => (
                         <label key={r} className="flex items-center mb-1">
                           <input
@@ -676,7 +561,7 @@ const Quiz: React.FC = () => {
                     className="px-4 py-2 bg-gray-600 rounded"
                     onClick={() => setModalOpen(false)}
                   >
-                    Cancel
+                    {t('quiz.location.cancel')}
                   </button>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -685,7 +570,7 @@ const Quiz: React.FC = () => {
                     disabled={!termsChecked || !geoConsent || (geoConsent === 'no' && !region)}
                     onClick={handleModalProceed}
                   >
-                    {isGeoLoading ? 'Loading...' : 'Let’s Snap to It!'}
+                    {isGeoLoading ? t('quiz.location.loading') : t('quiz.location.proceed')}
                   </motion.button>
                 </div>
               </motion.div>
@@ -702,8 +587,8 @@ const Quiz: React.FC = () => {
         <div className="page-content flex flex-col items-center justify-center text-white relative">
           <ProgressBar />
           <div className="text-center mb-8">
-            <p className="text-lg">Question {currentQuestion + 1}/10</p>
-            <p className="text-2xl font-bold">{questions[currentQuestion].question}</p>
+            <p className="text-lg">{t('quiz.question_number', { current: currentQuestion + 1, total: 10 })}</p>
+            <p className="text-2xl font-bold">{questions[currentQuestion]}</p>
           </div>
           <Slider
             value={scores[currentQuestion]}
@@ -721,15 +606,15 @@ const Quiz: React.FC = () => {
     if (!prelimPersona) {
       return (
         <div className="min-h-screen bg-[rgba(26,42,68,0.95)] flex items-center justify-center text-white">
-          Analyzing your responses...
+          {t('quiz.analyzing')}
         </div>
       );
     }
-    const followUpQuestions = personalityQuestions[prelimPersona.name] || [];
+    const followUpQuestions = personalityQuestions[prelimPersona.englishName || prelimPersona.name] || [];
     if (currentFollowUp >= followUpQuestions.length) {
       return (
         <div className="min-h-screen bg-[rgba(26,42,68,0.95)] flex items-center justify-center text-white">
-          Analyzing your responses...
+          {t('quiz.analyzing')}
         </div>
       );
     }
@@ -750,7 +635,7 @@ const Quiz: React.FC = () => {
             />
           </motion.div>
           <div className="text-center mb-8">
-            <p className="text-lg">Refinement Question {currentFollowUp + 1}/{followUpQuestions.length}</p>
+            <p className="text-lg">{t('quiz.refinement', { current: currentFollowUp + 1, total: followUpQuestions.length })}</p>
             <p className="text-2xl font-bold">{currentQuestionItem.question}</p>
           </div>
           <div className="w-full max-w-md mx-auto">
@@ -786,10 +671,10 @@ const Quiz: React.FC = () => {
                 border: none;
               }
             `}</style>
-            <div className="flex justify-between mt-2 text-sm">
-              <span>Strongly Disagree</span>
-              <span>Strongly Agree</span>
-            </div>
+        <div className="flex justify-between mt-2 text-sm">
+          <span>{t('quiz.disagree')}</span>
+          <span>{t('quiz.agree')}</span>
+        </div>
           </div>
         </div>
       </div>
@@ -806,7 +691,7 @@ const Quiz: React.FC = () => {
             transition={{ duration: 2, ease: 'easeOut' }}
             className="text-center mb-8"
           >
-            <h2 className="text-4xl font-bold mb-4">Your Travel Persona:</h2>
+            <h2 className="text-4xl font-bold mb-4">{t('quiz.persona_reveal')}</h2>
             <p className="text-3xl text-[#00FF7F]">{finalPersona!.name}</p>
             <p className="mt-4">{finalPersona!.description}</p>
             <div className="mt-4 flex flex-wrap justify-center">
@@ -823,7 +708,7 @@ const Quiz: React.FC = () => {
             className="mt-16 px-8 py-4 bg-[#00FF7F] text-black font-bold rounded-lg"
             onClick={handleRevealComplete}
           >
-            See Results
+            {t('quiz.see_results')}
           </motion.button>
         </div>
       </div>

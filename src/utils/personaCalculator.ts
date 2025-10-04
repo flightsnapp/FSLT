@@ -17,6 +17,7 @@ export interface Persona {
   weights: Record<Trait, number>;
   teaser: string;
   image: string;
+  englishName?: string;
 }
 
 // 25 Travel Personas (fully integrated from personas.json)
@@ -467,7 +468,7 @@ export const calculateTraitScores = (questionScores: number[]): { raw: Scores; c
 };
 
 // Get persona based on trait scores
-export const getPersona = (traitScores: Scores, followUpTags: string[] = []): Persona => {
+export const getPersona = (traitScores: Scores, followUpTags: string[] = [], t?: any): Persona => {
   if (!traitScores || Object.keys(traitScores).length !== 5) {
     throw new Error('Must provide trait scores for all 5 traits');
   }
@@ -475,7 +476,10 @@ export const getPersona = (traitScores: Scores, followUpTags: string[] = []): Pe
   const fits = personaFit(traitScores, personaWeights);
   const selectedPersona = PERSONAS.find(p => p.name === fits[0].persona);
   if (!selectedPersona) throw new Error('No matching persona found');
-  return { ...selectedPersona, tags: [...selectedPersona.tags, ...followUpTags] };
+  const personaKey = selectedPersona.name.toLowerCase().replace(/the /g, '').replace(/ /g, '_');
+  const translatedName = t ? t(`personas.${personaKey}.name`) : selectedPersona.name;
+  const translatedDescription = t ? t(`personas.${personaKey}.description`) : selectedPersona.description;
+  return { ...selectedPersona, englishName: selectedPersona.name, name: selectedPersona.name, description: selectedPersona.description, tags: [...selectedPersona.tags, ...followUpTags] };
 };
 
 // Encrypt quiz result

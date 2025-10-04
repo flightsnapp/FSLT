@@ -10,6 +10,7 @@ import Team from './Team';
 import Personas from './Personas';
 import Header from './Header';
 import Footer from './Footer';
+import './i18n'; // Initialize i18n
 
 const App: React.FC = () => {
   return (
